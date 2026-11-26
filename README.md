@@ -49,8 +49,10 @@
 
 ## 一次性设置（大约 2 分钟）
 
-代码已经全部放在仓库里了，只需要在 GitHub 网页上点两处设置：
+代码已经全部放在仓库里了，只需要在 GitHub 网页上操作几步：
 
+0. **启用定时任务文件**（GitHub 规定工作流文件只能由有 workflow 权限的账号写入，所以这一步要你手动点一下）：
+   打开仓库的 `deploy/radar.yml` → 全选复制内容 → 回到仓库首页点 **Add file → Create new file** → 文件名填 `.github/workflows/radar.yml` → 粘贴 → **Commit changes**
 1. **打开 GitHub Pages**：仓库 → Settings → Pages → Build and deployment → Source 选 **GitHub Actions**
 2. **允许 Actions 写仓库**：Settings → Actions → General → Workflow permissions 选 **Read and write permissions** → Save
 3. 到 Actions 页面，选「小豆邀请码雷达」→ **Run workflow** 手动跑第一次
@@ -66,7 +68,7 @@
 解决方法二选一：
 
 - **把仓库改成公开**（推荐）：Settings → General → Danger Zone → Change visibility。公开仓库 Actions 不限时、Pages 免费。仓库里没有任何密钥，公开是安全的（微博 Cookie 如果配置也是放在 Secret 里，不会公开）
-- **保持私有**：把 `.github/workflows/radar.yml` 里的 `*/5` 改成 `*/30`（每 30 分钟一次，约 1500 分钟 / 月），并升级 Pro 或把网页部署到自己服务器
+- **保持私有**：把工作流文件里的 `*/5` 改成 `*/30`（每 30 分钟一次，约 1500 分钟 / 月），并升级 Pro 或把网页部署到自己服务器
 
 ## 可调参数
 
@@ -114,7 +116,7 @@ https://你的网页地址/?data=https://你的数据地址/codes.json
 ## 目录结构
 
 ```
-.github/workflows/radar.yml   定时任务：扫描 → 存数据到 data 分支 → 发布网页
+deploy/radar.yml              定时任务模板：复制到 .github/workflows/radar.yml 后生效
 radar/main.py                 主程序：调度各平台、合并历史、输出 codes.json
 radar/sources.py              各平台免登录抓取源（B 站 / 贴吧 / 微博）
 radar/extract.py              邀请码、有效期、已领 / 售卖识别
