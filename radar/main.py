@@ -15,6 +15,29 @@ LOOKBACK_HOURS = float(os.getenv("RADAR_LOOKBACK_HOURS", "48"))
 KEEP_HOURS = float(os.getenv("RADAR_KEEP_HOURS", "72"))
 
 
+PLATFORM_HOSTS = [
+    ("bilibili.com", "B站"), ("b23.tv", "B站"), ("tieba.baidu.com", "百度贴吧"), ("douyin.com", "抖音"),
+    ("xiaohongshu.com", "小红书"), ("xhslink.com", "小红书"), ("weibo.com", "微博"), ("weibo.cn", "微博"),
+    ("x.com", "X"), ("twitter.com", "X"), ("t.me", "Telegram"), ("github.com", "GitHub"),
+    ("zhihu.com", "知乎"), ("linux.do", "LINUX DO"), ("v2ex.com", "V2EX"), ("reddit.com", "Reddit"),
+    ("threads.net", "Threads"), ("facebook.com", "Facebook"), ("youtube.com", "YouTube"),
+    ("kuaishou.com", "快手"), ("douban.com", "豆瓣"), ("csdn.net", "CSDN"), ("juejin.cn", "掘金"),
+    ("weixin.qq.com", "微信公众号"), ("smzdm.com", "什么值得买"), ("xianyu", "闲鱼"), ("goofish.com", "闲鱼"),
+]
+
+
+def platform_of(source, url, aggregator):
+    """只保留平台名，不保留具体出处。"""
+    if aggregator:
+        return "抓码聚合站"
+    u = (url or "").lower()
+    for h, name in PLATFORM_HOSTS:
+        if h in u:
+            return name
+    base = source.split("·")[0].replace("评论", "").replace("楼层", "")
+    return {"全网": "其他网页", "贴吧": "百度贴吧"}.get(base, base)
+
+
 def iso(dt):
     return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -27,10 +50,10 @@ def load(path):
         return {"codes": []}
 
 
-def run(out_path, prev_path):
+def run(out_path, prev_path, state_path):
     now = datetime.now(timezone.utc)
     since = now - timedelta(hours=LOOKBACK_HOURS)
-    prev = {c["code"]: c for c in load(prev_path).get("codes", [])}
+    prev = {c["code"]: c for c in load(prev_path).get("codes", [])}  # prev_path 是内部状态文件
     status = {}
     posts = []
     enabled = [s for s in os.getenv("RADAR_SOURCES", ",".join(SOURCES)).split(",") if s in SOURCES]
@@ -74,24 +97,29 @@ def run(out_path, prev_path):
                 item = {"code": code, "first_seen": iso(now),
                         "posted_at": iso(posted) if posted else None, "time_source": tsrc, "time_text": raw,
                         "source": p.source, "url": p.url, "author": p.author,
+                        "platform": platform_of(p.source, p.url, aggregator),
                         "snippet": (seg if getattr(p, "page_text", False) else p.text)[:160],
                         "title": p.title[:80], "confidence": conf,
                         "expires_at": iso(exp) if exp else None, "suspect_used": used,
                         "suspect_sale": looks_for_sale(seg), "aggregator": aggregator,
                         "invite_link": f"https://activity.doubao.com/ug/invite-share/M-{code}",
-                        "seen_count": 1, "seen_on": [p.source]}
+                        "seen_count": 1, "last_seen": iso(now)}
+                item["seen_on"] = [item["platform"]]
                 codes[code] = item
             else:
                 item.setdefault("time_source", "首次发现" if item.get("time_estimated") else "原帖时间")
-                if p.source not in item.setdefault("seen_on", [item["source"]]):
-                    item["seen_on"].append(p.source)
+                plat = platform_of(p.source, p.url, aggregator)
+                if plat not in item.setdefault("seen_on", [item.get("platform", plat)]):
+                    item["seen_on"].append(plat)
                     item["seen_count"] = len(item["seen_on"])
+                item["last_seen"] = iso(now)
                 better = RANK[tsrc] > RANK.get(item["time_source"], 1)
                 earlier = (RANK[tsrc] == RANK.get(item["time_source"], 1) and posted and item.get("posted_at")
                            and posted < datetime.fromisoformat(item["posted_at"].replace("Z", "+00:00")))
                 if posted and (better or earlier):
                     item.update(posted_at=iso(posted), time_source=tsrc, time_text=raw, source=p.source,
                                 url=p.url, author=p.author, aggregator=aggregator,
+                                platform=platform_of(p.source, p.url, aggregator),
                                 snippet=(seg if getattr(p, "page_text", False) else p.text)[:160])
                 if exp and not item.get("expires_at"):
                     item["expires_at"] = iso(exp)
@@ -112,8 +140,26 @@ def run(out_path, prev_path):
         result.append(c)
     result.sort(key=lambda c: c.get("posted_at") or c["first_seen"], reverse=True)
 
-    data = {"updated_at": iso(now), "keywords": KEYWORDS, "sources": status,
-            "count": len(result), "codes": result}
+    # 内部状态（含出处，用于下一轮合并）与公开数据（不含出处）分开保存
+    state = {"updated_at": iso(now), "codes": result, "scans": (load(prev_path).get("scans") or [])[-95:]}
+    new_codes = [c for c in result if c["code"] not in prev]
+    state["scans"].append({"at": iso(now), "new": len(new_codes), "total": len(result),
+                           "sources": {k: (v.get("posts", 0) if v.get("ok") else -1) for k, v in status.items()}})
+    with open(state_path, "w", encoding="utf-8") as f:
+        json.dump(state, f, ensure_ascii=False)
+    KEEP = ("code", "platform", "seen_on", "seen_count", "first_seen", "last_seen", "posted_at", "time_source",
+            "time_text", "expires_at", "confidence", "suspect_used", "suspect_sale", "aggregator", "invite_link")
+    public = [{k: c.get(k) for k in KEEP} for c in result]
+    for c in public:
+        c.setdefault("platform", None)
+        if not c["platform"]:
+            c["platform"] = "其他网页"
+    since24 = now - timedelta(hours=24)
+    data = {"updated_at": iso(now), "count": len(public), "codes": public,
+            "sources": {k: {"ok": v.get("ok"), "posts": v.get("posts", 0)} for k, v in status.items()},
+            "stats": {"new_this_scan": len(new_codes),
+                      "found_24h": sum(1 for c in result if c["first_seen"] >= iso(since24)),
+                      "scans": state["scans"][-48:]}}
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
@@ -123,11 +169,12 @@ def run(out_path, prev_path):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="site/data/codes.json")
-    ap.add_argument("--prev", default="site/data/codes.json")
+    ap.add_argument("--state", default="state/state.json", help="内部状态（含出处），不发布到网页")
     ap.add_argument("--loops", type=int, default=int(os.getenv("RADAR_LOOPS", "1")))
     ap.add_argument("--interval", type=int, default=int(os.getenv("RADAR_INTERVAL", "60")))
     a = ap.parse_args()
     for i in range(a.loops):
-        run(a.out, a.prev if i == 0 else a.out)
+        os.makedirs(os.path.dirname(a.state) or ".", exist_ok=True)
+        run(a.out, a.state, a.state)
         if i < a.loops - 1:
             time.sleep(a.interval)

@@ -36,12 +36,12 @@ jobs:
           pip install -r requirements.txt
           python -m playwright install --with-deps chromium
 
-      - name: 取回上一轮的数据（存放在 data 分支）
-        run: |
-          mkdir -p site/data
-          if git fetch --depth=1 origin data 2>/dev/null; then
-            git show origin/data:codes.json > site/data/codes.json || true
-          fi
+      - name: 取回上一轮的追踪状态（存在 Actions 缓存里，不公开）
+        uses: actions/cache/restore@v4
+        with:
+          path: state
+          key: radar-state-${{ github.run_id }}
+          restore-keys: radar-state-
 
       - name: 启动 SearXNG（开源元搜索，聚合 Google / Bing / 百度 / 搜狗微信 / 360 等）
         run: |
@@ -59,9 +59,16 @@ jobs:
           WEIBO_COOKIE: ${{ secrets.WEIBO_COOKIE }}
           RADAR_LOOPS: ${{ vars.RADAR_LOOPS || '2' }}
           RADAR_KEYWORDS: ${{ vars.RADAR_KEYWORDS || '小豆邀请码,小豆 邀请码,小豆邀请' }}
-        run: python radar/main.py --out site/data/codes.json --prev site/data/codes.json
+        run: python radar/main.py --out site/data/codes.json --state state/state.json
 
-      - name: 保存数据到 data 分支（只保留最新一份，不刷提交历史）
+      - name: 保存追踪状态
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: state
+          key: radar-state-${{ github.run_id }}
+
+      - name: 保存公开数据到 data 分支（只保留最新一份，不刷提交历史）
         run: |
           tmp=$(mktemp -d)
           cp site/data/codes.json "$tmp/"

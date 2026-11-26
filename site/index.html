@@ -2,40 +2,62 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>小豆邀请码 · 全网社交雷达</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<title>小豆邀请码雷达</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <div class="brand"><span class="dot"></span>小豆邀请码 · 全网社交雷达</div>
-  <div class="meta" id="meta">正在加载…</div>
+<header class="hero">
+  <div class="title"><span class="pulse"></span><h1>小豆邀请码雷达</h1></div>
+  <p class="sub" id="meta">正在加载…</p>
+  <div class="stats" id="stats"></div>
 </header>
-<section class="bar">
-  <label><input type="checkbox" id="fresh" checked> 只看 10 分钟内鲜码</label>
-  <label><input type="checkbox" id="hideUsed" checked> 隐藏疑似已领/售卖</label>
-  <label><input type="checkbox" id="hideAgg"> 隐藏抓码聚合站</label>
-  <select id="src"><option value="">全部平台</option></select>
-  <button id="reload">立即刷新</button>
-</section>
-<section id="sources" class="sources"></section>
+
+<nav class="toolbar">
+  <div class="seg" id="seg">
+    <button data-v="10" class="on">10 分钟内</button>
+    <button data-v="60">1 小时内</button>
+    <button data-v="1440">24 小时内</button>
+    <button data-v="0">全部</button>
+  </div>
+  <div class="filters">
+    <select id="plat"><option value="">全部平台</option></select>
+    <select id="sort">
+      <option value="time">按时间</option>
+      <option value="chance">按可用可能性</option>
+    </select>
+    <label class="sw"><input type="checkbox" id="hideBad" checked><span></span>隐藏大概率失效</label>
+  </div>
+</nav>
+
 <main id="list"></main>
-<p class="empty" id="empty" hidden>当前筛选条件下暂无新码（“只看 10 分钟内鲜码”只算能确定发布时间的码）。雷达每几分钟自动扫一次，页面每 30 秒自动拉取。可以先取消“只看 10 分钟内鲜码”看看最近的码。</p>
+<p class="empty" id="empty" hidden></p>
+
 <footer>
-  数据只来自公开帖子和评论，不登录、不发帖、不代领。码能不能用以小豆 App 验证为准，请勿付费买码。
-  <br>数据地址：<code id="dataUrl"></code>（可在网址后加 <code>?data=你的 codes.json 地址</code> 切换数据源）
+  每几分钟自动查询一次，页面每 30 秒自动更新。<br>
+  用了某个码发现失效？点卡片上的「失效了」帮大家标一下，可用就点「能用」。<br>
+  码能不能用以小豆 App 验证为准，请勿付费购买邀请码。
 </footer>
+
+<div class="toast" id="toast"></div>
+
 <template id="card">
   <article class="card">
-    <div class="top">
+    <div class="row1">
       <span class="code"></span>
-      <button class="copy">复制</button>
-      <a class="go" target="_blank" rel="noopener">打开邀请链接</a>
+      <span class="chance"></span>
     </div>
-    <div class="tags"></div>
-    <div class="times"></div>
-    <p class="snippet"></p>
-    <div class="foot"><a class="origin" target="_blank" rel="noopener">查看出处</a><span class="where"></span></div>
+    <div class="chips"></div>
+    <dl class="times"></dl>
+    <div class="actions">
+      <button class="btn primary copy">复制</button>
+      <a class="btn tint go" target="_blank" rel="noopener noreferrer">去兑换</a>
+      <span class="spacer"></span>
+      <button class="btn ghost ok">能用 <b>0</b></button>
+      <button class="btn ghost bad">失效了 <b>0</b></button>
+    </div>
   </article>
 </template>
 <script src="app.js"></script>
