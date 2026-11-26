@@ -1,0 +1,38 @@
+# SearXNG 配置：只在 GitHub Actions 里临时启动，给雷达当全网元搜索用
+use_default_settings:
+  engines:
+    keep_only:
+      - google
+      - google news
+      - bing
+      - bing news
+      - duckduckgo
+      - brave
+      - yahoo
+      - yahoo news
+      - qwant
+      - startpage
+      - mojeek
+      - yandex
+      - baidu
+      - sogou
+      - sogou wechat
+      - 360search
+      - quark
+      - reddit
+      - mastodon
+      - lemmy posts
+      - github
+server:
+  secret_key: "xiaodou-radar-local-only"
+  limiter: false
+  image_proxy: false
+  public_instance: false
+search:
+  safe_search: 0
+  formats:
+    - html
+    - json
+outgoing:
+  request_timeout: 8.0
+  max_request_timeout: 20.0

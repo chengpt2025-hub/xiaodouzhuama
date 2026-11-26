@@ -48,23 +48,34 @@ def run(out_path, prev_path):
     codes = dict(prev)
     for p in posts:
         ctx = p.is_topic or has_context(p.title) or has_context(p.text)
-        for code, conf in extract_codes(p.text, ctx):
-            exp = parse_expire(p.text, p.posted_at)
-            used = any(code in r or looks_used(r) for r in p.replies if looks_used(r))
+        found = extract_codes(p.text, ctx)
+        aggregator = getattr(p, "page_text", False) and len(found) >= 5  # 一页里一堆码 = 抓码 / 聚合站
+        for code, conf in found:
+            i = p.text.upper().find(code)
+            near = p.text[max(0, i - 80): i + 160] if i >= 0 else p.text
+            exp = parse_expire(near, p.posted_at)
+            used = any(looks_used(r) for r in p.replies) or (getattr(p, "page_text", False) and looks_used(near))
             item = codes.get(code)
             if item is None:
                 item = {"code": code, "first_seen": iso(now), "posted_at": iso(p.posted_at),
+                        "time_estimated": getattr(p, "time_estimated", False),
                         "source": p.source, "url": p.url, "author": p.author,
-                        "snippet": p.text[:160], "title": p.title[:80], "confidence": conf,
+                        "snippet": near[:160] if getattr(p, "page_text", False) else p.text[:160],
+                        "title": p.title[:80], "confidence": conf,
                         "expires_at": iso(exp) if exp else None, "suspect_used": used,
-                        "suspect_sale": looks_for_sale(p.text),
+                        "suspect_sale": looks_for_sale(near), "aggregator": aggregator,
                         "invite_link": f"https://activity.doubao.com/ug/invite-share/M-{code}",
-                        "seen_count": 1}
+                        "seen_count": 1, "seen_on": [p.source]}
                 codes[code] = item
             else:
-                item["seen_count"] = item.get("seen_count", 1) + (1 if p.url != item["url"] else 0)
-                if p.posted_at < datetime.fromisoformat(item["posted_at"].replace("Z", "+00:00")):
-                    item.update(posted_at=iso(p.posted_at), source=p.source, url=p.url, author=p.author)
+                if p.source not in item.setdefault("seen_on", [item["source"]]):
+                    item["seen_on"].append(p.source)
+                    item["seen_count"] = len(item["seen_on"])
+                real_time = not getattr(p, "time_estimated", False)
+                old_t = datetime.fromisoformat(item["posted_at"].replace("Z", "+00:00"))
+                if real_time and (item.get("time_estimated") or p.posted_at < old_t):
+                    item.update(posted_at=iso(p.posted_at), source=p.source, url=p.url, author=p.author,
+                                time_estimated=False, aggregator=False, snippet=p.text[:160])
                 if exp and not item.get("expires_at"):
                     item["expires_at"] = iso(exp)
                 if conf == "high":

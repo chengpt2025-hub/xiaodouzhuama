@@ -2,7 +2,7 @@
 
 自动在**社交 / 娱乐平台的公开帖子和评论**里蹲「小豆」（豆包旗下 AI 个人助理，字节跳动）的公测邀请码，筛出 **10 分钟内刚发出的鲜码**，用一个 iOS 风格的网页实时展示。
 
-- 不抓“抓码网站”，只抓平台上真人发的帖子和评论
+- 覆盖国内外社交 / 娱乐平台和全球大部分公开网站；真人帖子优先，抓码聚合站单独标记、默认隐藏
 - 全程**免登录**：用平台网页端自带的游客机制（游客指纹 + 公开签名算法），不需要你的任何账号
 - 云端运行：GitHub Actions 每 5 分钟扫一次，GitHub Pages 托管网页，零服务器成本
 - 以后要迁到自己服务器，整个仓库拷过去加一条 `crontab` 就行（见下文）
@@ -31,9 +31,17 @@
 | 小红书 | Playwright 无头浏览器游客模式，页面自己算 X-s / X-t | 搜笔记，再打开笔记抓正文和评论；接口拿不到时退回页面直出数据 | 已接入，需在 GitHub 上首次运行验证；小红书搜索对游客限制较严，可能经常被拦 |
 | 微博 | Cookie（可选） | 实时搜索 | 微博搜索对游客一律跳登录页，默认关闭；在 Secret 里配 `WEIBO_COOKIE` 才启用 |
 
+| **全网检索** | 开源元搜索 **ddgs**（Bing / Google / Yahoo / DuckDuckGo / Brave / Mojeek / Yandex）+ 在 Actions 里用 Docker 临时起的 **SearXNG**（再加百度、搜狗、搜狗微信、360、夸克、Reddit、Mastodon、Lemmy 等）→ 搜最近一天的结果 → 用 **Jina Reader** 免登录读正文（JS 渲染页也能读） | 全球大部分公开网站、论坛、博客、新闻；X / 微博等平台的帖子会以搜索摘要的形式被收进来 | ddgs 部分已实测：一轮 27 个网址、发现 57 个码，其中含 X 帖子里带有效期的码；SearXNG 需在 GitHub 上运行验证 |
+| Telegram | 网页预览 `t.me/s/频道?q=小豆`（公开频道免登录） | 从搜索结果和网页里自动发现频道，再搜频道内消息；也可在 `RADAR_TG_CHANNELS` 里手动指定 | 已接入 |
+| GitHub | Actions 自带的 GITHUB_TOKEN 调搜索 API | Issue / 讨论里贴出的码 | 已接入 |
+
 任何一个平台失败（被拦、要验证、改版）只会跳过它自己，网页顶部会显示“暂不可用”和原因，其他平台照常。
 
-暂未接入：**X（推特）**。搜索接口全部要求登录，公开镜像站（nitter 等）基本失效，游客无头浏览器也会被直接跳登录页。
+X（推特）没有直连：它的搜索接口全部要求登录，nitter 等镜像站基本失效。现在通过全网检索层拿到搜索引擎收录的 X 帖子摘要，实测能抓到 X 上带有效期的码。
+
+**关于抓码聚合站**：全网检索会扫到别人做的抓码 / 聚合站。同一页面里出现 5 个以上码就会标成“来自抓码聚合站”，网页默认隐藏（勾掉“隐藏抓码聚合站”可以看）；同一个码如果后来在真人帖子里出现，会自动改用真人帖子的时间和链接。
+
+**关于时间**：搜索引擎给不出发帖时间的网页，卡片上显示的是“首次发现于”，不是“发布于”。
 
 新增平台：在 `radar/sources.py`（接口签名类）或 `radar/browser.py`（无头浏览器类）里写一个抓取函数，返回 `Post` 列表，再加进 `SOURCES` 字典即可。
 
@@ -76,7 +84,7 @@
 | `RADAR_LOOPS` | Variable | `2` | 每次运行内连扫几轮（每轮间隔 60 秒） |
 | `WEIBO_COOKIE` | Secret | 空 | 填了就启用微博源（可选，需要登录态，和“免登录”原则冲突，默认不开） |
 
-本地 / 服务器上还可以用环境变量：`RADAR_SOURCES`（启用哪些源，如 `bilibili,tieba`）、`RADAR_LOOKBACK_HOURS`（往回看多少小时，默认 48）、`RADAR_KEEP_HOURS`（码保留多久，默认 72）、`RADAR_BILI_VIDEOS`（B 站每个关键词抓多少条视频的评论，默认 12）、`RADAR_TIEBA_THREADS`（贴吧翻多少个帖子，默认 15）、`RADAR_DOUYIN_VIDEOS`（抖音抓多少条视频评论，默认 8）、`RADAR_XHS_NOTES`（小红书抓多少篇笔记，默认 8）。
+本地 / 服务器上还可以用环境变量：`RADAR_SOURCES`（启用哪些源，如 `bilibili,tieba`）、`RADAR_LOOKBACK_HOURS`（往回看多少小时，默认 48）、`RADAR_KEEP_HOURS`（码保留多久，默认 72）、`RADAR_BILI_VIDEOS`（B 站每个关键词抓多少条视频的评论，默认 12）、`RADAR_TIEBA_THREADS`（贴吧翻多少个帖子，默认 15）、`RADAR_DOUYIN_VIDEOS`（抖音抓多少条视频评论，默认 8）、`RADAR_XHS_NOTES`（小红书抓多少篇笔记，默认 8）、`RADAR_WEB_KEYWORDS`（全网检索关键词）、`RADAR_WEB_PAGES`（每轮读多少个网页正文，默认 40）、`RADAR_DDGS_BACKENDS`（用哪些搜索引擎）、`RADAR_TG_CHANNELS`（手动指定 Telegram 频道）、`SEARXNG_URL`（自己的 SearXNG 地址）。
 
 ## 迁移到自己的服务器
 
@@ -85,6 +93,9 @@ git clone https://github.com/chengpt2025-hub/xiaodouzhuama.git
 cd xiaodouzhuama
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python -m playwright install --with-deps chromium
+# 可选：自己起一个 SearXNG 增强全网检索
+docker run -d -p 8888:8080 -v $PWD/deploy/searxng:/etc/searxng searxng/searxng
+export SEARXNG_URL=http://127.0.0.1:8888
 
 # 先手动跑一次
 .venv/bin/python radar/main.py --out site/data/codes.json
@@ -117,12 +128,14 @@ deploy/radar.yml              定时任务模板：复制到 .github/workflows/r
 radar/main.py                 主程序：调度各平台、合并历史、输出 codes.json
 radar/sources.py              接口签名类抓取源（B 站 / 贴吧 / 微博）
 radar/browser.py              无头浏览器游客抓取（抖音 / 小红书）
+radar/web.py                  全网检索（ddgs + SearXNG 元搜索、Jina Reader 读正文、Telegram、GitHub）
+deploy/searxng/settings.yml   SearXNG 配置（启用哪些搜索引擎）
 radar/extract.py              邀请码、有效期、已领 / 售卖识别
 site/index.html               网页
 site/app.js                   网页逻辑（自动刷新、筛选、复制）
 site/style.css                iOS 风格样式，自动深浅色
 site/data/codes.json          数据示例（线上以 data 分支为准）
-requirements.txt              Python 依赖（requests、playwright）
+requirements.txt              Python 依赖（requests、playwright、ddgs）
 ```
 
 ## codes.json 格式

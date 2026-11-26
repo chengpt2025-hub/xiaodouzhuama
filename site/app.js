@@ -29,7 +29,7 @@ function render() {
   $("#meta").textContent = `雷达上次扫描：${fmt(data.updated_at)}（${ago(data.updated_at)}） · 共 ${data.count} 个码 · 关键词：${data.keywords.join(" / ")}`;
   const srcBox = $("#sources");
   srcBox.innerHTML = "";
-  const names = { bilibili: "B站", tieba: "百度贴吧", douyin: "抖音", xiaohongshu: "小红书", weibo: "微博" };
+  const names = { bilibili: "B站", tieba: "百度贴吧", douyin: "抖音", xiaohongshu: "小红书", web: "全网检索", weibo: "微博" };
   for (const [k, v] of Object.entries(data.sources || {})) {
     const el = document.createElement("span");
     el.className = v.ok ? "ok" : "bad";
@@ -47,6 +47,7 @@ function render() {
   const list = data.codes.filter((c) => {
     if ($("#fresh").checked && now - new Date(c.posted_at) > FRESH_MIN * 60000) return false;
     if ($("#hideUsed").checked && (c.suspect_used || c.suspect_sale)) return false;
+    if ($("#hideAgg").checked && c.aggregator) return false;
     if (c.expires_at && new Date(c.expires_at) < now) return false;
     if (sel.value && c.source !== sel.value) return false;
     return true;
@@ -73,16 +74,18 @@ function render() {
     if (c.expires_at) add("有效期至 " + fmt(c.expires_at), "o");
     if (c.suspect_used) add("评论区说已被领", "r");
     if (c.suspect_sale) add("疑似售卖/引流", "r");
+    if (c.aggregator) add("来自抓码聚合站", "o");
     if (c.seen_count > 1) add(`${c.seen_count} 处出现`);
     n.querySelector(".snippet").textContent = c.snippet;
     n.querySelector(".origin").href = c.url;
-    n.querySelector(".time").textContent = `发布于 ${ago(c.posted_at)}`;
+    n.querySelector(".time").textContent = c.time_estimated ? `首次发现于 ${ago(c.first_seen)}` : `发布于 ${ago(c.posted_at)}`;
     box.append(n);
   }
 }
 
 $("#fresh").onchange = render;
 $("#hideUsed").onchange = render;
+$("#hideAgg").onchange = render;
 $("#src").onchange = render;
 $("#reload").onclick = load;
 load();

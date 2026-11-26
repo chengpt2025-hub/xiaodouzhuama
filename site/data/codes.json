@@ -1,25 +1,1215 @@
 {
- "updated_at": "2026-11-26T19:54:28Z",
+ "updated_at": "2026-11-26T20:41:26Z",
  "keywords": [
   "小豆邀请码",
   "小豆 邀请码",
   "小豆邀请"
  ],
  "sources": {
-  "bilibili": {
+  "web": {
    "ok": true,
-   "posts": 30,
-   "seconds": 10.3
-  },
-  "tieba": {
-   "ok": false,
-   "error": "贴吧返回 403（多半是安全验证），本轮跳过"
-  },
-  "weibo": {
-   "ok": false,
-   "error": "微博搜索需要登录，未配置 WEIBO_COOKIE，跳过（可选源）"
+   "posts": 44,
+   "seconds": 50.3
   }
  },
- "count": 0,
- "codes": []
+ "count": 57,
+ "codes": [
+  {
+   "code": "Y5JPEM",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·x.com",
+   "url": "https://x.com/Handizoct/status/2125881335319523359",
+   "author": "google",
+   "snippet": "Handi on X: \"邀请你认识一下小豆：你的主动个人助理，记住你的喜好，... 20 hours ago · 邀请你认识一下小豆：你的主动个人助理，记住你的喜好，照顾你的日常。 邀请码：Y5JPEM 有效期至：2026-11-28 16:58",
+   "title": "Handi on X: \"邀请你认识一下小豆：你的主动个人助理，记住你的喜好，...",
+   "confidence": "high",
+   "expires_at": "2026-11-28T08:58:00Z",
+   "suspect_used": false,
+   "suspect_sale": false,
+   "aggregator": false,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-Y5JPEM",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·x.com"
+   ]
+  },
+  {
+   "code": "3NU8DZ",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "有新发出的公开码。公开码通常几分钟内就被领完，别挨个试旧码，免得被锁一天。先看 怎么真正进去 ，过一会儿再点「刷新」。 较旧的码（大概率已被用完）· 55 条 3NU8DZ 待验证 weibo.com 1 小时 32 分钟前发出 复制 已被用 JXUD5H 待验证 X 帖 1 小时 56 分钟前发出 复制 已被用 SG",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-3NU8DZ",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "JXUD5H",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "真正进去 ，过一会儿再点「刷新」。 较旧的码（大概率已被用完）· 55 条 3NU8DZ 待验证 weibo.com 1 小时 32 分钟前发出 复制 已被用 JXUD5H 待验证 X 帖 1 小时 56 分钟前发出 复制 已被用 SGA6LK 待验证 X 帖 2 小时 1 分钟前发出 复制 已被用 6U43CD 待验",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-JXUD5H",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "SGA6LK",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "条 3NU8DZ 待验证 weibo.com 1 小时 32 分钟前发出 复制 已被用 JXUD5H 待验证 X 帖 1 小时 56 分钟前发出 复制 已被用 SGA6LK 待验证 X 帖 2 小时 1 分钟前发出 复制 已被用 6U43CD 待验证 X 帖 2 小时 1 分钟前发出 复制 已被用 X4MDRS 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-SGA6LK",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "6U43CD",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "出 复制 已被用 JXUD5H 待验证 X 帖 1 小时 56 分钟前发出 复制 已被用 SGA6LK 待验证 X 帖 2 小时 1 分钟前发出 复制 已被用 6U43CD 待验证 X 帖 2 小时 1 分钟前发出 复制 已被用 X4MDRS 待验证 X 帖 2 小时 29 分钟前发出 复制 已被用 YZN964 待验",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-6U43CD",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "X4MDRS",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 SGA6LK 待验证 X 帖 2 小时 1 分钟前发出 复制 已被用 6U43CD 待验证 X 帖 2 小时 1 分钟前发出 复制 已被用 X4MDRS 待验证 X 帖 2 小时 29 分钟前发出 复制 已被用 YZN964 待验证 X 帖 2 小时 29 分钟前发出 复制 已被用 HWW5TH 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-X4MDRS",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "YZN964",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "出 复制 已被用 6U43CD 待验证 X 帖 2 小时 1 分钟前发出 复制 已被用 X4MDRS 待验证 X 帖 2 小时 29 分钟前发出 复制 已被用 YZN964 待验证 X 帖 2 小时 29 分钟前发出 复制 已被用 HWW5TH 待验证 X 帖 2 小时 42 分钟前发出 复制 已被用 W6L1C8 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-YZN964",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "HWW5TH",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 X4MDRS 待验证 X 帖 2 小时 29 分钟前发出 复制 已被用 YZN964 待验证 X 帖 2 小时 29 分钟前发出 复制 已被用 HWW5TH 待验证 X 帖 2 小时 42 分钟前发出 复制 已被用 W6L1C8 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 H9N3F7 待验",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-HWW5TH",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "W6L1C8",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 YZN964 待验证 X 帖 2 小时 29 分钟前发出 复制 已被用 HWW5TH 待验证 X 帖 2 小时 42 分钟前发出 复制 已被用 W6L1C8 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 H9N3F7 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 P2X8R5 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-W6L1C8",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "H9N3F7",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "出 复制 已被用 HWW5TH 待验证 X 帖 2 小时 42 分钟前发出 复制 已被用 W6L1C8 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 H9N3F7 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 P2X8R5 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 Y4M7D6 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-H9N3F7",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "P2X8R5",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 W6L1C8 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 H9N3F7 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 P2X8R5 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 Y4M7D6 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 T5B9K1 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-P2X8R5",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "Y4M7D6",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 H9N3F7 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 P2X8R5 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 Y4M7D6 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 T5B9K1 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 C8Q2L4 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-Y4M7D6",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "T5B9K1",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 P2X8R5 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 Y4M7D6 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 T5B9K1 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 C8Q2L4 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 N3A7X5 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-T5B9K1",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "C8Q2L4",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 Y4M7D6 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 T5B9K1 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 C8Q2L4 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 N3A7X5 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 R6V9H3 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-C8Q2L4",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "N3A7X5",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 T5B9K1 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 C8Q2L4 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 N3A7X5 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 R6V9H3 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 D8J4P2 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-N3A7X5",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "R6V9H3",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 C8Q2L4 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 N3A7X5 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 R6V9H3 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 D8J4P2 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 M5C1Y7 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-R6V9H3",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "D8J4P2",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 N3A7X5 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 R6V9H3 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 D8J4P2 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 M5C1Y7 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 K2F8W4 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-D8J4P2",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "M5C1Y7",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 R6V9H3 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 D8J4P2 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 M5C1Y7 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 K2F8W4 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 B9R3T6 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-M5C1Y7",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "K2F8W4",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 D8J4P2 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 M5C1Y7 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 K2F8W4 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 B9R3T6 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 Q7L5N2 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-K2F8W4",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "B9R3T6",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 M5C1Y7 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 K2F8W4 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 B9R3T6 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 Q7L5N2 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 A4P8D3 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-B9R3T6",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "Q7L5N2",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 K2F8W4 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 B9R3T6 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 Q7L5N2 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 A4P8D3 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 X6M2K9 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-Q7L5N2",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "A4P8D3",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 B9R3T6 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 Q7L5N2 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 A4P8D3 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 X6M2K9 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 CVPL9E 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-A4P8D3",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "X6M2K9",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 Q7L5N2 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 A4P8D3 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 X6M2K9 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 CVPL9E 待验证 X 帖 3 小时 31 分钟前发出 复制 已被用 P3X6M2 待验",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-X6M2K9",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "CVPL9E",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 A4P8D3 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 X6M2K9 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 CVPL9E 待验证 X 帖 3 小时 31 分钟前发出 复制 已被用 P3X6M2 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 H0K4A7 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-CVPL9E",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "P3X6M2",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "出 复制 已被用 X6M2K9 待验证 X 帖 3 小时 9 分钟前发出 复制 已被用 CVPL9E 待验证 X 帖 3 小时 31 分钟前发出 复制 已被用 P3X6M2 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 H0K4A7 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 G1J9S3 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-P3X6M2",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "H0K4A7",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 CVPL9E 待验证 X 帖 3 小时 31 分钟前发出 复制 已被用 P3X6M2 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 H0K4A7 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 G1J9S3 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 F8D2U5 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-H0K4A7",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "G1J9S3",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 P3X6M2 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 H0K4A7 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 G1J9S3 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 F8D2U5 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 E6H3W1 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-G1J9S3",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "F8D2U5",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 H0K4A7 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 G1J9S3 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 F8D2U5 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 E6H3W1 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 C4N7Y8 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-F8D2U5",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "E6H3W1",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 G1J9S3 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 F8D2U5 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 E6H3W1 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 C4N7Y8 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 B9V0L2 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-E6H3W1",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "C4N7Y8",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 F8D2U5 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 E6H3W1 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 C4N7Y8 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 B9V0L2 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 Q5R1T6 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-C4N7Y8",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "B9V0L2",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 E6H3W1 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 C4N7Y8 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 B9V0L2 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 Q5R1T6 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 Z2M8X4 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-B9V0L2",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "Q5R1T6",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 C4N7Y8 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 B9V0L2 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 Q5R1T6 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 Z2M8X4 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 A7K3P9 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-Q5R1T6",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "Z2M8X4",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 B9V0L2 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 Q5R1T6 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 Z2M8X4 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 A7K3P9 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 KFCV60 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-Z2M8X4",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "A7K3P9",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 Q5R1T6 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 Z2M8X4 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 A7K3P9 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 KFCV60 待验证 X 帖 3 小时 58 分钟前发出 复制 已被用 NAV9YO 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-A7K3P9",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "KFCV60",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 Z2M8X4 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 A7K3P9 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 KFCV60 待验证 X 帖 3 小时 58 分钟前发出 复制 已被用 NAV9YO 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 PW7DHU 待验",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-KFCV60",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "NAV9YO",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 A7K3P9 待验证 X 帖 3 小时 51 分钟前发出 复制 已被用 KFCV60 待验证 X 帖 3 小时 58 分钟前发出 复制 已被用 NAV9YO 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 PW7DHU 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 OW0XBU 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-NAV9YO",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "PW7DHU",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "出 复制 已被用 KFCV60 待验证 X 帖 3 小时 58 分钟前发出 复制 已被用 NAV9YO 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 PW7DHU 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 OW0XBU 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 RQC5GI 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-PW7DHU",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "OW0XBU",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 NAV9YO 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 PW7DHU 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 OW0XBU 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 RQC5GI 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 NDB3KO 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-OW0XBU",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "RQC5GI",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 PW7DHU 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 OW0XBU 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 RQC5GI 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 NDB3KO 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 BD4WBS 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-RQC5GI",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "NDB3KO",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 OW0XBU 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 RQC5GI 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 NDB3KO 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 BD4WBS 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 POI0GY 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-NDB3KO",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "BD4WBS",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 RQC5GI 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 NDB3KO 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 BD4WBS 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 POI0GY 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 KEI0E8 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-BD4WBS",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "POI0GY",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 NDB3KO 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 BD4WBS 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 POI0GY 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 KEI0E8 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 V5ME50 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-POI0GY",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "KEI0E8",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 BD4WBS 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 POI0GY 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 KEI0E8 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 V5ME50 待验证 X 帖 4 小时 12 分钟前发出 复制 已被用 K4VFT2 待验",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-KEI0E8",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "V5ME50",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 POI0GY 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 KEI0E8 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 V5ME50 待验证 X 帖 4 小时 12 分钟前发出 复制 已被用 K4VFT2 待验证 X 帖 4 小时 26 分钟前发出 复制 已被用 CKVRA2 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-V5ME50",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "K4VFT2",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "出 复制 已被用 KEI0E8 待验证 X 帖 4 小时 1 分钟前发出 复制 已被用 V5ME50 待验证 X 帖 4 小时 12 分钟前发出 复制 已被用 K4VFT2 待验证 X 帖 4 小时 26 分钟前发出 复制 已被用 CKVRA2 待验证 X 帖 4 小时 26 分钟前发出 复制 已被用 CZ4V50 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-K4VFT2",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "CKVRA2",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 V5ME50 待验证 X 帖 4 小时 12 分钟前发出 复制 已被用 K4VFT2 待验证 X 帖 4 小时 26 分钟前发出 复制 已被用 CKVRA2 待验证 X 帖 4 小时 26 分钟前发出 复制 已被用 CZ4V50 待验证 X 帖 4 小时 51 分钟前发出 复制 已被用 LRW3VH 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-CKVRA2",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "CZ4V50",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 K4VFT2 待验证 X 帖 4 小时 26 分钟前发出 复制 已被用 CKVRA2 待验证 X 帖 4 小时 26 分钟前发出 复制 已被用 CZ4V50 待验证 X 帖 4 小时 51 分钟前发出 复制 已被用 LRW3VH 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 AWYO7Q 待验",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-CZ4V50",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "LRW3VH",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 CKVRA2 待验证 X 帖 4 小时 26 分钟前发出 复制 已被用 CZ4V50 待验证 X 帖 4 小时 51 分钟前发出 复制 已被用 LRW3VH 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 AWYO7Q 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 9CSEY6 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-LRW3VH",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "AWYO7Q",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "出 复制 已被用 CZ4V50 待验证 X 帖 4 小时 51 分钟前发出 复制 已被用 LRW3VH 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 AWYO7Q 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 9CSEY6 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 SCF4GV 待验证",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-AWYO7Q",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "9CSEY6",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 LRW3VH 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 AWYO7Q 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 9CSEY6 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 SCF4GV 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 V50KFC 已用 ",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-9CSEY6",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "SCF4GV",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 AWYO7Q 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 9CSEY6 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 SCF4GV 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 V50KFC 已用 X 帖 5 小时 5 分钟前发出 复制 已被用 Z90FCZ 待验证 ",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-SCF4GV",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "V50KFC",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "发出 复制 已被用 9CSEY6 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 SCF4GV 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 V50KFC 已用 X 帖 5 小时 5 分钟前发出 复制 已被用 Z90FCZ 待验证 X 帖 5 小时 6 分钟前发出 复制 已被用 X8M9K2 待验证 ",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-V50KFC",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "Z90FCZ",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "前发出 复制 已被用 SCF4GV 待验证 X 帖 5 小时 1 分钟前发出 复制 已被用 V50KFC 已用 X 帖 5 小时 5 分钟前发出 复制 已被用 Z90FCZ 待验证 X 帖 5 小时 6 分钟前发出 复制 已被用 X8M9K2 待验证 X 帖 5 小时 26 分钟前发出 复制 已被用 6WQ7XF 待验",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-Z90FCZ",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "X8M9K2",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "前发出 复制 已被用 V50KFC 已用 X 帖 5 小时 5 分钟前发出 复制 已被用 Z90FCZ 待验证 X 帖 5 小时 6 分钟前发出 复制 已被用 X8M9K2 待验证 X 帖 5 小时 26 分钟前发出 复制 已被用 6WQ7XF 待验证 X 帖 5 小时 39 分钟前发出 复制 已被用 WI4JIM 待",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-X8M9K2",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "6WQ7XF",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": "出 复制 已被用 Z90FCZ 待验证 X 帖 5 小时 6 分钟前发出 复制 已被用 X8M9K2 待验证 X 帖 5 小时 26 分钟前发出 复制 已被用 6WQ7XF 待验证 X 帖 5 小时 39 分钟前发出 复制 已被用 WI4JIM 待验证 X 帖 5 小时 41 分钟前发出 复制 已被用 怎么真正进去 找",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-6WQ7XF",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "WI4JIM",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·douxiaozhu.app",
+   "url": "https://douxiaozhu.app/",
+   "author": "",
+   "snippet": " 复制 已被用 X8M9K2 待验证 X 帖 5 小时 26 分钟前发出 复制 已被用 6WQ7XF 待验证 X 帖 5 小时 39 分钟前发出 复制 已被用 WI4JIM 待验证 X 帖 5 小时 41 分钟前发出 复制 已被用 怎么真正进去 找已经开通的朋友私发。每人只有 1 个邀请名额，私发的码不会被别人抢走。 ",
+   "title": "今日最新豆包小豆邀请码｜豆小助 douxiaozhu.app",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": true,
+   "suspect_sale": false,
+   "aggregator": true,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-WI4JIM",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·douxiaozhu.app"
+   ]
+  },
+  {
+   "code": "YOLO26",
+   "first_seen": "2026-11-26T20:41:26Z",
+   "posted_at": "2026-11-26T20:41:59Z",
+   "time_estimated": true,
+   "source": "全网·blog.csdn.net",
+   "url": "https://blog.csdn.net/2600_96788427/article/details/171419570",
+   "author": "",
+   "snippet": "公转型、全球化研发团队协同、以及物理办公空间向体验中心的战略重构。本文聚焦真实项目中验证过的‘文化即工程’落地路径，尤其深入拆解信任度指标设计与异步协作规范。\nYOLO26算法道路监控道路裂缝目标检测+训练好的模型+2400张数据集+pyqt可视化界面.zip\n11-25\n附训练好的 YOLO 权重与 PyQt 可视化",
+   "title": "千笔AI邀请码3tu55，新用户福利入口 - CSDN博客",
+   "confidence": "medium",
+   "expires_at": null,
+   "suspect_used": false,
+   "suspect_sale": false,
+   "aggregator": false,
+   "invite_link": "https://activity.doubao.com/ug/invite-share/M-YOLO26",
+   "seen_count": 1,
+   "seen_on": [
+    "全网·blog.csdn.net"
+   ]
+  }
+ ]
 }

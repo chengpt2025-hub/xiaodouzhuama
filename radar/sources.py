@@ -237,10 +237,16 @@ def fetch_xiaohongshu(keywords, since):
     return f(keywords, since, Post)
 
 
+def fetch_web(keywords, since):
+    from web import fetch_web as f
+    return f(keywords, since, Post)
+
+
 SOURCES = {
     "bilibili": fetch_bilibili,        # 游客指纹 + WBI 签名
     "tieba": fetch_tieba,              # 贴吧客户端签名
     "douyin": fetch_douyin,            # 无头浏览器游客模式（页面自己算 a_bogus 签名）
     "xiaohongshu": fetch_xiaohongshu,  # 无头浏览器游客模式（页面自己算 X-s 签名）
+    "web": fetch_web,                  # 全网：元搜索 + 网页阅读 + Telegram + GitHub
     "weibo": fetch_weibo,              # 可选，需要 WEIBO_COOKIE
 }
