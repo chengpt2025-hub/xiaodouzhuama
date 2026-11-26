@@ -1,0 +1,71 @@
+name: 小豆邀请码雷达
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # GitHub 最短 5 分钟一次，高峰期可能会有延迟
+  workflow_dispatch:         # 支持在 Actions 页面手动点 "Run workflow"
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: radar
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: 取回上一轮的数据（存放在 data 分支）
+        run: |
+          mkdir -p site/data
+          if git fetch --depth=1 origin data 2>/dev/null; then
+            git show origin/data:codes.json > site/data/codes.json || true
+          fi
+
+      - name: 扫描各平台
+        env:
+          WEIBO_COOKIE: ${{ secrets.WEIBO_COOKIE }}
+          RADAR_LOOPS: ${{ vars.RADAR_LOOPS || '1' }}
+          RADAR_KEYWORDS: ${{ vars.RADAR_KEYWORDS || '小豆邀请码,小豆 邀请码,小豆邀请' }}
+        run: python radar/main.py --out site/data/codes.json --prev site/data/codes.json
+
+      - name: 保存数据到 data 分支（只保留最新一份，不刷提交历史）
+        run: |
+          tmp=$(mktemp -d)
+          cp site/data/codes.json "$tmp/"
+          cd "$tmp"
+          git init -q -b data
+          git config user.name "radar-bot"
+          git config user.email "radar-bot@users.noreply.github.com"
+          git add codes.json
+          git commit -qm "data: $(date -u +%FT%TZ)"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" data
+
+      - uses: actions/configure-pages@v5
+        continue-on-error: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
