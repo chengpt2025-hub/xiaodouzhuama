@@ -7,7 +7,7 @@ import time
 from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
-from extract import extract_codes, has_context, looks_for_sale, looks_used, parse_expire  # noqa: E402
+from extract import extract_codes, has_context, looks_for_sale, looks_used, parse_expire, parse_post_time  # noqa: E402
 from sources import SOURCES  # noqa: E402
 
 KEYWORDS = [k.strip() for k in os.getenv("RADAR_KEYWORDS", "小豆邀请码,小豆 邀请码,小豆邀请").split(",") if k.strip()]
@@ -46,53 +46,71 @@ def run(out_path, prev_path):
             print(f"[{name}] 失败：{e}")
 
     codes = dict(prev)
+    RANK = {"原帖时间": 3, "页面标注": 2, "首次发现": 1}
     for p in posts:
         ctx = p.is_topic or has_context(p.title) or has_context(p.text)
         found = extract_codes(p.text, ctx)
+        is_page = getattr(p, "page_text", False) or getattr(p, "time_estimated", False)
         aggregator = getattr(p, "page_text", False) and len(found) >= 5  # 一页里一堆码 = 抓码 / 聚合站
+        up = p.text.upper()
+        pos = sorted((up.find(c), c) for c, _ in found if up.find(c) >= 0)
         for code, conf in found:
-            i = p.text.upper().find(code)
-            near = p.text[max(0, i - 80): i + 160] if i >= 0 else p.text
-            exp = parse_expire(near, p.posted_at)
-            used = any(looks_used(r) for r in p.replies) or (getattr(p, "page_text", False) and looks_used(near))
+            i = up.find(code)
+            # 这个码自己的那一段：从码开始，到下一个码之前（聚合站列表里每个码一段）
+            nxt = [j for j, _ in pos if j > i]
+            seg = p.text[i: (nxt[0] if nxt else i + 200)][:200] if i >= 0 else p.text[:200]
+            near = (p.text[max(0, i - 80): i] + seg) if i >= 0 else p.text[:240]
+            exp = parse_expire(seg, p.posted_at) or parse_expire(near, p.posted_at)
+            if is_page:
+                t, raw = parse_post_time(seg, now)
+                if t is None and not getattr(p, "page_text", False):  # 搜索摘要：整段找
+                    t, raw = parse_post_time(p.text, now)
+                tsrc, posted = ("页面标注", t) if t else ("首次发现", None)
+            else:
+                tsrc, posted, raw = "原帖时间", p.posted_at, None
+            used = any(looks_used(r) for r in p.replies) or (getattr(p, "page_text", False) and looks_used(seg))
             item = codes.get(code)
             if item is None:
-                item = {"code": code, "first_seen": iso(now), "posted_at": iso(p.posted_at),
-                        "time_estimated": getattr(p, "time_estimated", False),
+                item = {"code": code, "first_seen": iso(now),
+                        "posted_at": iso(posted) if posted else None, "time_source": tsrc, "time_text": raw,
                         "source": p.source, "url": p.url, "author": p.author,
-                        "snippet": near[:160] if getattr(p, "page_text", False) else p.text[:160],
+                        "snippet": (seg if getattr(p, "page_text", False) else p.text)[:160],
                         "title": p.title[:80], "confidence": conf,
                         "expires_at": iso(exp) if exp else None, "suspect_used": used,
-                        "suspect_sale": looks_for_sale(near), "aggregator": aggregator,
+                        "suspect_sale": looks_for_sale(seg), "aggregator": aggregator,
                         "invite_link": f"https://activity.doubao.com/ug/invite-share/M-{code}",
                         "seen_count": 1, "seen_on": [p.source]}
                 codes[code] = item
             else:
+                item.setdefault("time_source", "首次发现" if item.get("time_estimated") else "原帖时间")
                 if p.source not in item.setdefault("seen_on", [item["source"]]):
                     item["seen_on"].append(p.source)
                     item["seen_count"] = len(item["seen_on"])
-                real_time = not getattr(p, "time_estimated", False)
-                old_t = datetime.fromisoformat(item["posted_at"].replace("Z", "+00:00"))
-                if real_time and (item.get("time_estimated") or p.posted_at < old_t):
-                    item.update(posted_at=iso(p.posted_at), source=p.source, url=p.url, author=p.author,
-                                time_estimated=False, aggregator=False, snippet=p.text[:160])
+                better = RANK[tsrc] > RANK.get(item["time_source"], 1)
+                earlier = (RANK[tsrc] == RANK.get(item["time_source"], 1) and posted and item.get("posted_at")
+                           and posted < datetime.fromisoformat(item["posted_at"].replace("Z", "+00:00")))
+                if posted and (better or earlier):
+                    item.update(posted_at=iso(posted), time_source=tsrc, time_text=raw, source=p.source,
+                                url=p.url, author=p.author, aggregator=aggregator,
+                                snippet=(seg if getattr(p, "page_text", False) else p.text)[:160])
                 if exp and not item.get("expires_at"):
                     item["expires_at"] = iso(exp)
                 if conf == "high":
                     item["confidence"] = "high"
                 item["suspect_used"] = item.get("suspect_used") or used
+            item.pop("time_estimated", None)
 
     keep_after = now - timedelta(hours=KEEP_HOURS)
     result = []
     for c in codes.values():
-        posted = datetime.fromisoformat(c["posted_at"].replace("Z", "+00:00"))
+        posted = datetime.fromisoformat((c.get("posted_at") or c["first_seen"]).replace("Z", "+00:00"))
         exp = c.get("expires_at")
         if exp and datetime.fromisoformat(exp.replace("Z", "+00:00")) < now - timedelta(hours=1):
             continue
         if posted < keep_after:
             continue
         result.append(c)
-    result.sort(key=lambda c: c["posted_at"], reverse=True)
+    result.sort(key=lambda c: c.get("posted_at") or c["first_seen"], reverse=True)
 
     data = {"updated_at": iso(now), "keywords": KEYWORDS, "sources": status,
             "count": len(result), "codes": result}

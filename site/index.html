@@ -14,13 +14,13 @@
 <section class="bar">
   <label><input type="checkbox" id="fresh" checked> 只看 10 分钟内鲜码</label>
   <label><input type="checkbox" id="hideUsed" checked> 隐藏疑似已领/售卖</label>
-  <label><input type="checkbox" id="hideAgg" checked> 隐藏抓码聚合站</label>
+  <label><input type="checkbox" id="hideAgg"> 隐藏抓码聚合站</label>
   <select id="src"><option value="">全部平台</option></select>
   <button id="reload">立即刷新</button>
 </section>
 <section id="sources" class="sources"></section>
 <main id="list"></main>
-<p class="empty" id="empty" hidden>当前筛选条件下暂无新码。雷达每几分钟自动扫一次，页面每 30 秒自动拉取。可以先取消“只看 10 分钟内鲜码”看看最近的码。</p>
+<p class="empty" id="empty" hidden>当前筛选条件下暂无新码（“只看 10 分钟内鲜码”只算能确定发布时间的码）。雷达每几分钟自动扫一次，页面每 30 秒自动拉取。可以先取消“只看 10 分钟内鲜码”看看最近的码。</p>
 <footer>
   数据只来自公开帖子和评论，不登录、不发帖、不代领。码能不能用以小豆 App 验证为准，请勿付费买码。
   <br>数据地址：<code id="dataUrl"></code>（可在网址后加 <code>?data=你的 codes.json 地址</code> 切换数据源）
@@ -33,8 +33,9 @@
       <a class="go" target="_blank" rel="noopener">打开邀请链接</a>
     </div>
     <div class="tags"></div>
+    <div class="times"></div>
     <p class="snippet"></p>
-    <div class="foot"><a class="origin" target="_blank" rel="noopener">查看原帖</a><span class="time"></span></div>
+    <div class="foot"><a class="origin" target="_blank" rel="noopener">查看出处</a><span class="where"></span></div>
   </article>
 </template>
 <script src="app.js"></script>

@@ -91,3 +91,44 @@ def looks_used(text: str) -> bool:
 
 def looks_for_sale(text: str) -> bool:
     return any(w in text for w in SALE_WORDS)
+
+
+# ------------------------------------------------------------ 时间识别 ----
+_REL = [
+    (re.compile(r"(\d+)\s*(?:小时|小時|h)\s*(\d+)\s*(?:分钟|分鐘|分|min)\S{0,2}前"), lambda m: timedelta(hours=int(m[1]), minutes=int(m[2]))),
+    (re.compile(r"(\d+)\s*(?:秒|s)\S{0,2}前"), lambda m: timedelta(seconds=int(m[1]))),
+    (re.compile(r"(\d+)\s*(?:分钟|分鐘|分)\S{0,2}前"), lambda m: timedelta(minutes=int(m[1]))),
+    (re.compile(r"(\d+)\s*(?:小时|小時|个小时)\S{0,2}前"), lambda m: timedelta(hours=int(m[1]))),
+    (re.compile(r"(\d+)\s*(?:天|日)前"), lambda m: timedelta(days=int(m[1]))),
+    (re.compile(r"(\d+)\s*(?:seconds?|secs?)\s+ago", re.I), lambda m: timedelta(seconds=int(m[1]))),
+    (re.compile(r"(\d+)\s*(?:minutes?|mins?)\s+ago", re.I), lambda m: timedelta(minutes=int(m[1]))),
+    (re.compile(r"(\d+)\s*(?:hours?|hrs?)\s+ago", re.I), lambda m: timedelta(hours=int(m[1]))),
+    (re.compile(r"(\d+)\s*days?\s+ago", re.I), lambda m: timedelta(days=int(m[1]))),
+    (re.compile(r"刚刚|剛剛|just now", re.I), lambda m: timedelta(0)),
+]
+_ABS = re.compile(r"(?:(\d{4})[-/年.])?(\d{1,2})[-/月.](\d{1,2})日?\s+(\d{1,2})[:：](\d{2})")
+
+
+def parse_post_time(text: str, now: datetime):
+    """从“3NU8DZ … 1 小时 32 分钟前发出”“20 hours ago”“11-27 03:15”之类的文字里识别发帖时间。
+    返回 (时间, 原文片段)；识别不到返回 (None, None)。会避开“有效期至 …”里的时间。"""
+    if not text:
+        return None, None
+    clean = EXPIRE_RE.sub(" ", text)
+    best = None
+    for rx, fn in _REL:
+        m = rx.search(clean)
+        if m and (best is None or m.start() < best[0]):
+            best = (m.start(), now - fn(m), m.group(0))
+    m = _ABS.search(clean)
+    if m and (best is None or m.start() < best[0]):
+        y, mo, d, hh, mm = m.groups()
+        try:
+            dt = datetime(int(y) if y else now.astimezone(CST).year, int(mo), int(d), int(hh), int(mm), tzinfo=CST)
+            if dt <= now + timedelta(minutes=5) and now - dt < timedelta(days=30):
+                best = (m.start(), dt, m.group(0))
+        except ValueError:
+            pass
+    if not best:
+        return None, None
+    return best[1].astimezone(timezone.utc), best[2]

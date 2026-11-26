@@ -12,6 +12,12 @@ const ago = (iso) => {
   if (s < 86400) return `${Math.floor(s / 3600)} 小时前`;
   return `${Math.floor(s / 86400)} 天前`;
 };
+const left = (iso) => {
+  const m = (new Date(iso) - Date.now()) / 60000;
+  if (m <= 0) return "已过期";
+  return m < 60 ? `剩 ${Math.floor(m)} 分钟` : `剩 ${Math.floor(m / 60)} 小时 ${Math.floor(m % 60)} 分`;
+};
+const postedOf = (c) => (c.posted_at ? new Date(c.posted_at) : null);
 const fmt = (iso) => new Date(iso).toLocaleString("zh-CN", { hour12: false, month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" });
 
 async function load() {
@@ -44,14 +50,15 @@ function render() {
   sel.value = cur;
 
   const now = Date.now();
-  const list = data.codes.filter((c) => {
-    if ($("#fresh").checked && now - new Date(c.posted_at) > FRESH_MIN * 60000) return false;
+  const list0 = data.codes.filter((c) => {
+    if ($("#fresh").checked && (!postedOf(c) || now - postedOf(c) > FRESH_MIN * 60000)) return false;
     if ($("#hideUsed").checked && (c.suspect_used || c.suspect_sale)) return false;
     if ($("#hideAgg").checked && c.aggregator) return false;
     if (c.expires_at && new Date(c.expires_at) < now) return false;
     if (sel.value && c.source !== sel.value) return false;
     return true;
   });
+  const list = list0.sort((a, b) => new Date(b.posted_at || b.first_seen) - new Date(a.posted_at || a.first_seen));
   const box = $("#list");
   box.innerHTML = "";
   $("#empty").hidden = list.length > 0;
@@ -59,7 +66,7 @@ function render() {
   for (const c of list) {
     const n = tpl.content.cloneNode(true);
     const card = n.querySelector(".card");
-    if (now - new Date(c.posted_at) <= FRESH_MIN * 60000) card.classList.add("fresh");
+    if (postedOf(c) && now - postedOf(c) <= FRESH_MIN * 60000) card.classList.add("fresh");
     n.querySelector(".code").textContent = c.code;
     n.querySelector(".go").href = c.invite_link;
     n.querySelector(".copy").onclick = async (e) => {
@@ -71,14 +78,23 @@ function render() {
     const add = (t, cls = "") => { const s = document.createElement("span"); s.textContent = t; s.className = cls; tags.append(s); };
     add(c.source);
     add(c.confidence === "high" ? "高可信" : "中可信", c.confidence === "high" ? "g" : "");
-    if (c.expires_at) add("有效期至 " + fmt(c.expires_at), "o");
     if (c.suspect_used) add("评论区说已被领", "r");
     if (c.suspect_sale) add("疑似售卖/引流", "r");
     if (c.aggregator) add("来自抓码聚合站", "o");
     if (c.seen_count > 1) add(`${c.seen_count} 处出现`);
     n.querySelector(".snippet").textContent = c.snippet;
     n.querySelector(".origin").href = c.url;
-    n.querySelector(".time").textContent = c.time_estimated ? `首次发现于 ${ago(c.first_seen)}` : `发布于 ${ago(c.posted_at)}`;
+    const ts = n.querySelector(".times");
+    const srcLabel = { "原帖时间": "平台原帖时间", "页面标注": "页面标注：" + (c.time_text || "") };
+    const row = (k, v) => { const b = document.createElement("b"); b.textContent = k; const s = document.createElement("span"); s.innerHTML = v; ts.append(b, s); };
+    if (c.posted_at) {
+      row("发布时间", `<span class="hl">${fmt(c.posted_at)}</span>（${ago(c.posted_at)}）<span class="src ${c.time_source === "原帖时间" ? "" : "est"}">${srcLabel[c.time_source] || c.time_source}</span>`);
+    } else {
+      row("发布时间", `<span class="hl">未知</span><span class="src est">出处没写发布时间</span>`);
+    }
+    row("首次发现", `${fmt(c.first_seen)}（${ago(c.first_seen)}）`);
+    row("有效期至", c.expires_at ? `${fmt(c.expires_at)}（<span class="${new Date(c.expires_at) < now ? "exp-bad" : ""}">${left(c.expires_at)}</span>）` : "未注明");
+    n.querySelector(".where").textContent = c.source;
     box.append(n);
   }
 }
