@@ -126,26 +126,75 @@ def _bili_comments(b, oid, rtype, url, title, since):
 
 
 # ---------------------------------------------------------------- 贴吧 ----
+_TB_VER = "12.57.4.2"
+
+
+def _tb_sign(params):
+    """贴吧客户端公开签名：参数按 key 排序拼接 + "tiebaclient!!!" 取 MD5 大写。"""
+    p = {k: str(v) for k, v in params.items()}
+    raw = "".join(f"{k}={v}" for k, v in sorted(p.items())) + "tiebaclient!!!"
+    p["sign"] = hashlib.md5(raw.encode()).hexdigest().upper()
+    return p
+
+
+def _tb_post(path, params):
+    r = requests.post("http://c.tieba.baidu.com" + path,
+                      data=_tb_sign({"_client_type": 2, "_client_version": _TB_VER, **params}),
+                      headers={"User-Agent": "bdtb for Android " + _TB_VER}, timeout=TIMEOUT)
+    j = r.json()
+    if str(j.get("error_code", "0")) not in ("0", ""):
+        raise RuntimeError(f"贴吧 {path} error_code={j.get('error_code')} {j.get('error_msg')}")
+    return j
+
+
+def _tb_text(content):
+    return "".join(c.get("text", "") or c.get("link", "") for c in content or [])
+
+
 def fetch_tieba(keywords, since):
-    s = requests.Session()
-    s.headers.update({"User-Agent": UA})
-    out = []
+    """贴吧：客户端接口签名法（免登录），按时间搜全吧帖子，再翻帖子楼层和楼中楼。"""
+    out, threads = [], {}
+    max_threads = int(os.getenv("RADAR_TIEBA_THREADS", "15"))
     for kw in keywords:
-        r = s.get("https://tieba.baidu.com/f/search/res",
-                  params={"ie": "utf-8", "qw": kw, "rn": 30, "sm": 1}, timeout=TIMEOUT)
-        if r.status_code != 200 or "s_post" not in r.text:
-            raise RuntimeError(f"贴吧返回 {r.status_code}（多半是安全验证），本轮跳过")
-        for blk in re.findall(r'<div class="s_post">(.*?)</div>\s*</div>', r.text, re.S):
-            href = re.search(r'href="(/p/\d+[^"]*)"', blk)
-            tm = re.search(r'(\d{4}-\d{2}-\d{2} \d{2}:\d{2})', blk)
-            if not href or not tm:
-                continue
-            posted = datetime.strptime(tm.group(1), "%Y-%m-%d %H:%M").replace(
-                tzinfo=timezone.utc) - (datetime(2000, 1, 1, 8) - datetime(2000, 1, 1, 0))
-            if posted < since:
-                continue
-            out.append(Post("百度贴吧", "https://tieba.baidu.com" + href.group(1).split("?")[0],
-                            _clean(blk), posted, "", "", False))
+        try:
+            j = _tb_post("/c/s/searchpost", {"word": kw, "pn": 1, "rn": 30, "sm": 1, "only_thread": 0})
+            items = j.get("post_list") or []
+        except Exception as e:  # noqa: BLE001  签名接口不通时退回网页移动端接口
+            print(f"  [贴吧] 客户端接口失败，改用移动网页接口: {e}")
+            r = requests.get("https://tieba.baidu.com/mo/q/search/thread",
+                             params={"word": kw, "pn": 1, "rn": 30, "sm": 1},
+                             headers={"User-Agent": UA}, timeout=TIMEOUT).json()
+            items = (r.get("data") or {}).get("post_list") or []
+        for it in items:
+            t = _ts(it.get("time") or it.get("create_time") or 0)
+            tid = str(it.get("tid"))
+            title = _clean(it.get("title"))
+            url = f"https://tieba.baidu.com/p/{tid}"
+            if t >= since:
+                author = (it.get("author") or {}).get("name_show") or (it.get("user") or {}).get("user_name", "")
+                out.append(Post("百度贴吧", f"{url}?pid={it.get('pid')}#{it.get('pid')}",
+                                f"{title} {_clean(it.get('content'))}", t, author, title, True))
+            mt = _ts(it.get("modified_time") or it.get("time") or 0)
+            if mt >= since and tid not in threads:
+                threads[tid] = title
+    for tid, title in list(threads.items())[:max_threads]:
+        url = f"https://tieba.baidu.com/p/{tid}"
+        try:
+            j = _tb_post("/c/f/pb/page", {"kz": tid, "pn": 1, "rn": 50, "r": 1})  # r=1 倒序，最新楼层在前
+        except Exception as e:  # noqa: BLE001
+            print(f"  [贴吧] 帖子 {tid} 失败: {e}")
+            continue
+        for p in j.get("post_list") or []:
+            t = _ts(p.get("time") or 0)
+            subs = [(_tb_text(x.get("content")), _ts(x.get("time") or 0), x.get("id"))
+                    for x in ((p.get("sub_post_list") or {}).get("sub_post_list") or [])]
+            if t >= since:
+                out.append(Post("贴吧楼层", f"{url}?pid={p.get('id')}#{p.get('id')}", _tb_text(p.get("content")), t,
+                                "", title, True, [x[0] for x in subs]))
+            for txt, st, sid in subs:
+                if st >= since:
+                    out.append(Post("贴吧楼层", f"{url}?pid={sid}#{sid}", txt, st, "", title, True))
+        time.sleep(0.3)
     return out
 
 
@@ -178,8 +227,20 @@ def fetch_weibo(keywords, since):
     return out
 
 
+def fetch_douyin(keywords, since):
+    from browser import fetch_douyin as f
+    return f(keywords, since, Post)
+
+
+def fetch_xiaohongshu(keywords, since):
+    from browser import fetch_xiaohongshu as f
+    return f(keywords, since, Post)
+
+
 SOURCES = {
-    "bilibili": fetch_bilibili,
-    "tieba": fetch_tieba,
-    "weibo": fetch_weibo,
+    "bilibili": fetch_bilibili,        # 游客指纹 + WBI 签名
+    "tieba": fetch_tieba,              # 贴吧客户端签名
+    "douyin": fetch_douyin,            # 无头浏览器游客模式（页面自己算 a_bogus 签名）
+    "xiaohongshu": fetch_xiaohongshu,  # 无头浏览器游客模式（页面自己算 X-s 签名）
+    "weibo": fetch_weibo,              # 可选，需要 WEIBO_COOKIE
 }

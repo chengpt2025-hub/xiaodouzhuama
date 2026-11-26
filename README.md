@@ -21,19 +21,21 @@
 
 ## 目前接入的平台
 
-| 平台 | 状态 | 抓什么 | 说明 |
+三种免登录方式组合使用：**游客签名法**（按平台网页 / 客户端公开的签名规则自己算签名）、**无头浏览器游客模式**（让平台页面自己算签名，我们只监听它的接口返回）、以及可选的 Cookie 方式。
+
+| 平台 | 方式 | 抓什么 | 状态 |
 |---|---|---|---|
-| B 站 | 免登录，已实测可用 | 按“最新发布”搜视频和专栏，再按时间抓每条的评论和楼中楼 | 游客 buvid + WBI 签名，和网页端算法一致 |
-| 百度贴吧 | 免登录，尝试中 | 按时间排序的全吧搜索 | 部分 IP 会被安全验证拦截，被拦时自动跳过本轮 |
-| 微博 | 可选 | 实时搜索 | 微博搜索现在强制登录，**默认关闭**；想开的话在仓库 Secret 里加 `WEIBO_COOKIE` |
+| B 站 | 游客 buvid 指纹 + WBI 签名 | 按“最新发布”搜视频和专栏，再按时间抓评论和楼中楼 | 已实测可用 |
+| 百度贴吧 | 贴吧客户端签名（参数排序 + `tiebaclient!!!` 取 MD5），失败时自动退回移动网页接口 | 按时间搜全吧帖子，再倒序翻楼层和楼中楼 | 已实测可用（一轮 44 条） |
+| 抖音 | Playwright 无头浏览器游客模式，页面自己算 a_bogus / msToken | 按“最新 + 一天内”搜视频，再打开视频抓评论和回复 | 已接入，需在 GitHub 上首次运行验证 |
+| 小红书 | Playwright 无头浏览器游客模式，页面自己算 X-s / X-t | 搜笔记，再打开笔记抓正文和评论；接口拿不到时退回页面直出数据 | 已接入，需在 GitHub 上首次运行验证；小红书搜索对游客限制较严，可能经常被拦 |
+| 微博 | Cookie（可选） | 实时搜索 | 微博搜索对游客一律跳登录页，默认关闭；在 Secret 里配 `WEIBO_COOKIE` 才启用 |
 
-暂未接入（如实说明）：
+任何一个平台失败（被拦、要验证、改版）只会跳过它自己，网页顶部会显示“暂不可用”和原因，其他平台照常。
 
-- **X（推特）**：搜索接口已经全部要求登录，公开镜像站基本失效
-- **小红书**：搜索需要登录 + 签名，游客拿不到搜索结果
-- **抖音**：综合搜索需要登录态和 a_bogus 签名；可以用之前抖音项目里那套游客凭证 + 无头浏览器的方法做，但比较重，放到下一版
+暂未接入：**X（推特）**。搜索接口全部要求登录，公开镜像站（nitter 等）基本失效，游客无头浏览器也会被直接跳登录页。
 
-新增平台很简单：在 `radar/sources.py` 里写一个 `fetch_xxx(keywords, since)` 函数，返回 `Post` 列表，然后加进 `SOURCES` 字典即可。
+新增平台：在 `radar/sources.py`（接口签名类）或 `radar/browser.py`（无头浏览器类）里写一个抓取函数，返回 `Post` 列表，再加进 `SOURCES` 字典即可。
 
 ## 怎么识别邀请码
 
@@ -60,7 +62,7 @@
 
 ### 运行频率说明
 
-仓库是公开的，GitHub Actions 不限时长、Pages 免费，所以默认配置是**每 5 分钟触发一次、每次连扫 3 轮（间隔 60 秒）**，相当于大约每 1~2 分钟就扫一遍。GitHub 定时任务高峰期偶尔会延迟几分钟，属正常现象；想更实时就迁到自己服务器用 `crontab` 每分钟跑。
+仓库是公开的，GitHub Actions 不限时长、Pages 免费，所以默认配置是**每 5 分钟触发一次、每次连扫 2 轮（间隔 60 秒）**，相当于每 2~3 分钟扫一遍（加了无头浏览器后单轮约 2 分钟）。GitHub 定时任务高峰期偶尔会延迟几分钟，属正常现象；想更实时就迁到自己服务器用 `crontab` 每分钟跑。
 
 仓库里没有任何密钥。如果以后配置 `WEIBO_COOKIE`，它存放在仓库 Secret 里，公开仓库也不会泄露。
 
@@ -71,10 +73,10 @@
 | 名称 | 类型 | 默认 | 作用 |
 |---|---|---|---|
 | `RADAR_KEYWORDS` | Variable | `小豆邀请码,小豆 邀请码,小豆邀请` | 搜索关键词，英文逗号分隔 |
-| `RADAR_LOOPS` | Variable | `3` | 每次运行内连扫几轮（每轮间隔 60 秒） |
+| `RADAR_LOOPS` | Variable | `2` | 每次运行内连扫几轮（每轮间隔 60 秒） |
 | `WEIBO_COOKIE` | Secret | 空 | 填了就启用微博源（可选，需要登录态，和“免登录”原则冲突，默认不开） |
 
-本地 / 服务器上还可以用环境变量：`RADAR_SOURCES`（启用哪些源，如 `bilibili,tieba`）、`RADAR_LOOKBACK_HOURS`（往回看多少小时，默认 48）、`RADAR_KEEP_HOURS`（码保留多久，默认 72）、`RADAR_BILI_VIDEOS`（每个关键词抓多少条视频的评论，默认 12）。
+本地 / 服务器上还可以用环境变量：`RADAR_SOURCES`（启用哪些源，如 `bilibili,tieba`）、`RADAR_LOOKBACK_HOURS`（往回看多少小时，默认 48）、`RADAR_KEEP_HOURS`（码保留多久，默认 72）、`RADAR_BILI_VIDEOS`（B 站每个关键词抓多少条视频的评论，默认 12）、`RADAR_TIEBA_THREADS`（贴吧翻多少个帖子，默认 15）、`RADAR_DOUYIN_VIDEOS`（抖音抓多少条视频评论，默认 8）、`RADAR_XHS_NOTES`（小红书抓多少篇笔记，默认 8）。
 
 ## 迁移到自己的服务器
 
@@ -82,6 +84,7 @@
 git clone https://github.com/chengpt2025-hub/xiaodouzhuama.git
 cd xiaodouzhuama
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+.venv/bin/python -m playwright install --with-deps chromium
 
 # 先手动跑一次
 .venv/bin/python radar/main.py --out site/data/codes.json
@@ -112,13 +115,14 @@ https://你的网页地址/?data=https://你的数据地址/codes.json
 ```
 deploy/radar.yml              定时任务模板：复制到 .github/workflows/radar.yml 后生效
 radar/main.py                 主程序：调度各平台、合并历史、输出 codes.json
-radar/sources.py              各平台免登录抓取源（B 站 / 贴吧 / 微博）
+radar/sources.py              接口签名类抓取源（B 站 / 贴吧 / 微博）
+radar/browser.py              无头浏览器游客抓取（抖音 / 小红书）
 radar/extract.py              邀请码、有效期、已领 / 售卖识别
 site/index.html               网页
 site/app.js                   网页逻辑（自动刷新、筛选、复制）
 site/style.css                iOS 风格样式，自动深浅色
 site/data/codes.json          数据示例（线上以 data 分支为准）
-requirements.txt              Python 依赖（只有 requests）
+requirements.txt              Python 依赖（requests、playwright）
 ```
 
 ## codes.json 格式

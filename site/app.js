@@ -29,7 +29,7 @@ function render() {
   $("#meta").textContent = `雷达上次扫描：${fmt(data.updated_at)}（${ago(data.updated_at)}） · 共 ${data.count} 个码 · 关键词：${data.keywords.join(" / ")}`;
   const srcBox = $("#sources");
   srcBox.innerHTML = "";
-  const names = { bilibili: "B站", tieba: "百度贴吧", weibo: "微博" };
+  const names = { bilibili: "B站", tieba: "百度贴吧", douyin: "抖音", xiaohongshu: "小红书", weibo: "微博" };
   for (const [k, v] of Object.entries(data.sources || {})) {
     const el = document.createElement("span");
     el.className = v.ok ? "ok" : "bad";
