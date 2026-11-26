@@ -19,7 +19,7 @@ concurrency:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
@@ -43,7 +43,7 @@ jobs:
       - name: 扫描各平台
         env:
           WEIBO_COOKIE: ${{ secrets.WEIBO_COOKIE }}
-          RADAR_LOOPS: ${{ vars.RADAR_LOOPS || '1' }}
+          RADAR_LOOPS: ${{ vars.RADAR_LOOPS || '3' }}
           RADAR_KEYWORDS: ${{ vars.RADAR_KEYWORDS || '小豆邀请码,小豆 邀请码,小豆邀请' }}
         run: python radar/main.py --out site/data/codes.json --prev site/data/codes.json
 

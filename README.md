@@ -58,17 +58,11 @@
 3. 到 Actions 页面，选「小豆邀请码雷达」→ **Run workflow** 手动跑第一次
 4. 跑完后网页地址是：`https://chengpt2025-hub.github.io/xiaodouzhuama/`
 
-### 关于私有仓库（重要）
+### 运行频率说明
 
-这个仓库目前是**私有**的，GitHub 免费账号有两个限制：
+仓库是公开的，GitHub Actions 不限时长、Pages 免费，所以默认配置是**每 5 分钟触发一次、每次连扫 3 轮（间隔 60 秒）**，相当于大约每 1~2 分钟就扫一遍。GitHub 定时任务高峰期偶尔会延迟几分钟，属正常现象；想更实时就迁到自己服务器用 `crontab` 每分钟跑。
 
-- **私有仓库不能开 GitHub Pages**（需要 GitHub Pro）。不开 Pages 也能跑，数据会照常更新到 `data` 分支的 `codes.json`，只是没有在线网页
-- **私有仓库每月只有 2000 分钟免费 Actions 时长**。每 5 分钟跑一次大约 1 分钟，一个月约 8600 分钟，会超额
-
-解决方法二选一：
-
-- **把仓库改成公开**（推荐）：Settings → General → Danger Zone → Change visibility。公开仓库 Actions 不限时、Pages 免费。仓库里没有任何密钥，公开是安全的（微博 Cookie 如果配置也是放在 Secret 里，不会公开）
-- **保持私有**：把工作流文件里的 `*/5` 改成 `*/30`（每 30 分钟一次，约 1500 分钟 / 月），并升级 Pro 或把网页部署到自己服务器
+仓库里没有任何密钥。如果以后配置 `WEIBO_COOKIE`，它存放在仓库 Secret 里，公开仓库也不会泄露。
 
 ## 可调参数
 
@@ -77,7 +71,7 @@
 | 名称 | 类型 | 默认 | 作用 |
 |---|---|---|---|
 | `RADAR_KEYWORDS` | Variable | `小豆邀请码,小豆 邀请码,小豆邀请` | 搜索关键词，英文逗号分隔 |
-| `RADAR_LOOPS` | Variable | `1` | 每次运行内连扫几轮（每轮间隔 60 秒），想更密可设 3 |
+| `RADAR_LOOPS` | Variable | `3` | 每次运行内连扫几轮（每轮间隔 60 秒） |
 | `WEIBO_COOKIE` | Secret | 空 | 填了就启用微博源（可选，需要登录态，和“免登录”原则冲突，默认不开） |
 
 本地 / 服务器上还可以用环境变量：`RADAR_SOURCES`（启用哪些源，如 `bilibili,tieba`）、`RADAR_LOOKBACK_HOURS`（往回看多少小时，默认 48）、`RADAR_KEEP_HOURS`（码保留多久，默认 72）、`RADAR_BILI_VIDEOS`（每个关键词抓多少条视频的评论，默认 12）。
@@ -105,7 +99,7 @@ crontab -e
 https://你的网页地址/?data=https://你的数据地址/codes.json
 ```
 
-例如直接读 GitHub 上 `data` 分支（公开仓库时）：
+例如直接读 GitHub 上 `data` 分支：
 
 ```
 ?data=https://raw.githubusercontent.com/chengpt2025-hub/xiaodouzhuama/data/codes.json
