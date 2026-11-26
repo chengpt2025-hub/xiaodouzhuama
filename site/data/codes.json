@@ -1,0 +1,25 @@
+{
+ "updated_at": "2026-11-26T19:54:28Z",
+ "keywords": [
+  "小豆邀请码",
+  "小豆 邀请码",
+  "小豆邀请"
+ ],
+ "sources": {
+  "bilibili": {
+   "ok": true,
+   "posts": 30,
+   "seconds": 10.3
+  },
+  "tieba": {
+   "ok": false,
+   "error": "贴吧返回 403（多半是安全验证），本轮跳过"
+  },
+  "weibo": {
+   "ok": false,
+   "error": "微博搜索需要登录，未配置 WEIBO_COOKIE，跳过（可选源）"
+  }
+ },
+ "count": 0,
+ "codes": []
+}
