@@ -63,6 +63,9 @@ def run(out_path, prev_path, state_path):
     STATE_VERSION = 2  # 识别规则改动后升级版本号，旧的追踪状态作废，避免旧的误判一直留着
     _st = load(prev_path)
     prev = {c["code"]: c for c in _st.get("codes", [])} if _st.get("version") == STATE_VERSION else {}
+    # 识别规则收紧后，把旧记录里不再合格的码（品牌名、活动码等误识别）清掉
+    from extract import _valid as _ok
+    prev = {k: v for k, v in prev.items() if v.get("invite_link") or _ok(k)}
     status = {}
     posts = []
     enabled = [s for s in os.getenv("RADAR_SOURCES", ",".join(SOURCES)).split(",") if s in SOURCES]

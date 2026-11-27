@@ -34,8 +34,21 @@ CONTEXT_WORDS = ("小豆", "小荳", "豆包", "doubao", "邀请码", "邀請碼
 _UNIT = re.compile(r"^(?:\d+(?:[KMGT]B|PX|MS|HZ|FPS|MAH|MM|CM|KG|GHZ|MHZ|K|W|V)|(?:SAVE|OFF|VIP|GIFT|CODE|PLUS|PRO|MAX)\d+)$")
 
 
-def _valid(code: str) -> bool:
+_YEARISH = re.compile(r"^[A-Z]{2}(19|20)\d\d$")  # BF2026、CT2020 这类“字母+年份”的活动码
+_EXTRA_BLACK = {"WT588F", "ICLOUD", "HOTELS", "AIRBNB", "AMAZON", "TAOBAO", "LENOVO", "ALIPAY", "TMALL0"}
+
+
+def _wordlike(c: str) -> bool:
+    """纯字母且含 2 个以上元音，多半是英文单词或品牌名（LENOVO、SPEEDO、WILSON），不是随机生成的码。"""
+    return c.isalpha() and sum(ch in "AEIOU" for ch in c) >= 2
+
+
+def _valid(code: str, from_link: bool = False) -> bool:
     c = code.upper()
+    if c in _EXTRA_BLACK:
+        return False
+    if not from_link and (_YEARISH.match(c) or _wordlike(c)):
+        return False
     if _UNIT.match(c):
         return False
     if c in BLACKLIST:
