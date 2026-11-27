@@ -65,7 +65,7 @@ def run(out_path, prev_path, state_path):
     prev = {c["code"]: c for c in _st.get("codes", [])} if _st.get("version") == STATE_VERSION else {}
     # 识别规则收紧后，把旧记录里不再合格的码（品牌名、活动码等误识别）清掉
     from extract import _valid as _ok
-    prev = {k: v for k, v in prev.items() if v.get("invite_link") or _ok(k)}
+    prev = {k: v for k, v in prev.items() if _ok(k)}
     status = {}
     posts = []
     enabled = [s for s in os.getenv("RADAR_SOURCES", ",".join(SOURCES)).split(",") if s in SOURCES]
@@ -174,8 +174,9 @@ def run(out_path, prev_path, state_path):
     KEEP = ("code", "platform", "seen_on", "seen_count", "first_seen", "last_seen", "posted_at", "time_source",
             "time_text", "expires_at", "confidence", "suspect_used", "suspect_sale", "aggregator", "via", "invite_link")
     # 聚合站上没标时间的码不公开：没法判断新旧，按要求“聚合站的码必须标清时间”
+    from extract import _valid as _ok2
     public = [{k: c.get(k) for k in KEEP} for c in result
-              if not (c.get("aggregator") and not c.get("posted_at") and not c.get("expires_at"))]
+              if _ok2(c["code"]) and not (c.get("aggregator") and not c.get("posted_at") and not c.get("expires_at"))]
     for c in public:
         c.setdefault("platform", None)
         if not c["platform"]:
