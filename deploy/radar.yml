@@ -11,6 +11,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  actions: write
 
 concurrency:
   group: radar
@@ -90,3 +91,9 @@ jobs:
       - id: deploy
         uses: actions/deploy-pages@v4
         continue-on-error: true
+
+      - name: 接力触发下一轮（GitHub 定时任务经常不触发，靠这一步保证持续更新）
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run radar.yml --repo ${{ github.repository }} --ref main
