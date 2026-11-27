@@ -31,7 +31,7 @@ BLACKLIST = {
 CONTEXT_WORDS = ("小豆", "小荳", "豆包", "doubao", "邀请码", "邀請碼")
 
 
-_UNIT = re.compile(r"^\d+(?:[KMGT]B|PX|MS|HZ|FPS|MAH|MM|CM|KG|GHZ|MHZ|K|W|V)$")
+_UNIT = re.compile(r"^(?:\d+(?:[KMGT]B|PX|MS|HZ|FPS|MAH|MM|CM|KG|GHZ|MHZ|K|W|V)|(?:SAVE|OFF|VIP|GIFT|CODE|PLUS|PRO|MAX)\d+)$")
 
 
 def _valid(code: str) -> bool:
@@ -164,3 +164,28 @@ def extract_codes_strict(text: str):
             out[code] = conf
             break
     return list(out.items())
+
+
+# 聚合站页面上的按钮文字，不能当成“已被用”的证据
+_BUTTON_WORDS = re.compile(r"复制|已被用|待验证|标记|刷新")
+_ORIGINS = [
+    (re.compile(r"\bX\s*帖|x\.com|twitter|推特|\bX\b(?=\s*\d)", re.I), "X"),
+    (re.compile(r"weibo|微博"), "微博"), (re.compile(r"小红书|xiaohongshu|xhs", re.I), "小红书"),
+    (re.compile(r"抖音|douyin", re.I), "抖音"), (re.compile(r"bilibili|B站|b站"), "B站"),
+    (re.compile(r"贴吧|tieba"), "百度贴吧"), (re.compile(r"linux\.do", re.I), "LINUX DO"),
+    (re.compile(r"t\.me|telegram|电报", re.I), "Telegram"), (re.compile(r"即刻|jike", re.I), "即刻"),
+    (re.compile(r"公众号|weixin", re.I), "微信公众号"), (re.compile(r"知乎|zhihu"), "知乎"),
+    (re.compile(r"v2ex", re.I), "V2EX"), (re.compile(r"github", re.I), "GitHub"),
+]
+
+
+def origin_platform(seg: str):
+    """聚合站列表里每个码后面通常写着它最初出自哪（如“X 帖”“weibo.com”），识别出来。"""
+    for rx, name in _ORIGINS:
+        if rx.search(seg or ""):
+            return name
+    return None
+
+
+def looks_used_page(seg: str) -> bool:
+    return looks_used(_BUTTON_WORDS.sub(" ", seg or ""))

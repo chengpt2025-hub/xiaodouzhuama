@@ -7,7 +7,8 @@ import time
 from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
-from extract import extract_codes, extract_codes_strict, has_context, looks_for_sale, looks_used, parse_expire, parse_post_time  # noqa: E402
+from extract import (extract_codes, extract_codes_strict, has_context, looks_for_sale, looks_used, looks_used_page,
+                     origin_platform, parse_expire, parse_post_time)  # noqa: E402
 from sources import SOURCES  # noqa: E402
 
 KEYWORDS = [k.strip() for k in os.getenv("RADAR_KEYWORDS", "小豆邀请码,小豆 邀请码,小豆邀请").split(",") if k.strip()]
@@ -97,13 +98,19 @@ def run(out_path, prev_path, state_path):
                 tsrc, posted = ("页面标注", t) if t else ("首次发现", None)
             else:
                 tsrc, posted, raw = "原帖时间", p.posted_at, None
-            used = any(looks_used(r) for r in p.replies) or (getattr(p, "page_text", False) and looks_used(seg))
+            used = any(looks_used(r) for r in p.replies) or (getattr(p, "page_text", False) and looks_used_page(seg))
+            via = None
+            plat = platform_of(p.source, p.url, aggregator)
+            if getattr(p, "page_text", False):
+                o = origin_platform(seg[6:])  # 码后面的那段文字里写的原始出处
+                if o:
+                    via, plat = (plat if plat != o else None), o
             item = codes.get(code)
             if item is None:
                 item = {"code": code, "first_seen": iso(now),
                         "posted_at": iso(posted) if posted else None, "time_source": tsrc, "time_text": raw,
                         "source": p.source, "url": p.url, "author": p.author,
-                        "platform": platform_of(p.source, p.url, aggregator),
+                        "platform": plat, "via": via,
                         "snippet": (seg if getattr(p, "page_text", False) else p.text)[:160],
                         "title": p.title[:80], "confidence": conf,
                         "expires_at": iso(exp) if exp else None, "suspect_used": used,
@@ -114,7 +121,6 @@ def run(out_path, prev_path, state_path):
                 codes[code] = item
             else:
                 item.setdefault("time_source", "首次发现" if item.get("time_estimated") else "原帖时间")
-                plat = platform_of(p.source, p.url, aggregator)
                 if plat not in item.setdefault("seen_on", [item.get("platform", plat)]):
                     item["seen_on"].append(plat)
                     item["seen_count"] = len(item["seen_on"])
@@ -125,7 +131,7 @@ def run(out_path, prev_path, state_path):
                 if posted and (better or earlier):
                     item.update(posted_at=iso(posted), time_source=tsrc, time_text=raw, source=p.source,
                                 url=p.url, author=p.author, aggregator=aggregator,
-                                platform=platform_of(p.source, p.url, aggregator),
+                                platform=plat, via=via,
                                 snippet=(seg if getattr(p, "page_text", False) else p.text)[:160])
                 if exp and not item.get("expires_at"):
                     item["expires_at"] = iso(exp)
@@ -154,7 +160,7 @@ def run(out_path, prev_path, state_path):
     with open(state_path, "w", encoding="utf-8") as f:
         json.dump(state, f, ensure_ascii=False)
     KEEP = ("code", "platform", "seen_on", "seen_count", "first_seen", "last_seen", "posted_at", "time_source",
-            "time_text", "expires_at", "confidence", "suspect_used", "suspect_sale", "aggregator", "invite_link")
+            "time_text", "expires_at", "confidence", "suspect_used", "suspect_sale", "aggregator", "via", "invite_link")
     public = [{k: c.get(k) for k in KEEP} for c in result]
     for c in public:
         c.setdefault("platform", None)

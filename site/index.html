@@ -3,63 +3,59 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-<title>小豆邀请码雷达</title>
+<title>今日最新小豆邀请码 · 小豆邀请码雷达</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="hero">
-  <div class="title"><span class="pulse"></span><h1>小豆邀请码雷达</h1></div>
-  <p class="sub" id="meta">正在加载…</p>
-  <div class="stats" id="stats"></div>
-</header>
+<div class="wrap">
+  <header>
+    <h1>小豆邀请码雷达</h1>
+    <p class="updated"><span class="dot"></span>最后更新：<b id="updated">加载中…</b>（北京时间）<button id="refresh" class="link">刷新</button></p>
+  </header>
 
-<nav class="toolbar">
-  <div class="seg" id="seg">
-    <button data-v="10" class="on">10 分钟内</button>
-    <button data-v="60">1 小时内</button>
-    <button data-v="1440">24 小时内</button>
-    <button data-v="0">全部</button>
+  <div class="tip">
+    <b>先看这条：</b>公开码通常几分钟内就会被用完；连续填失效码可能触发「今日验码次数已达上限」被锁一天。
+    <b>只试 10 分钟内发出的码，最多试 2～3 个。</b>
   </div>
-  <div class="filters">
-    <select id="plat"><option value="">全部平台</option></select>
-    <select id="sort">
-      <option value="time">按时间</option>
-      <option value="chance">按可用可能性</option>
-    </select>
-    <label class="sw"><input type="checkbox" id="hideBad" checked><span></span>隐藏大概率失效</label>
-  </div>
-</nav>
 
-<main id="list"></main>
-<p class="empty" id="empty" hidden></p>
+  <section id="hero" class="hero" hidden></section>
 
-<footer>
-  每几分钟自动查询一次，页面每 30 秒自动更新。<br>
-  用了某个码发现失效？点卡片上的「失效了」帮大家标一下，可用就点「能用」。<br>
-  码能不能用以小豆 App 验证为准，请勿付费购买邀请码。
-</footer>
+  <nav class="plats" id="plats"></nav>
 
+  <section>
+    <h2>最新的码 <span class="count" id="newCount"></span><small>30 分钟内发出</small></h2>
+    <ul class="rows" id="newList"></ul>
+    <p class="none" id="newNone" hidden>最近 30 分钟内还没有查到新码，雷达每几分钟查一次，页面会自动更新。</p>
+  </section>
+
+  <section>
+    <details id="oldBox">
+      <summary><h2>较旧的码（大概率已被用完）<span class="count" id="oldCount"></span></h2></summary>
+      <ul class="rows old" id="oldList"></ul>
+    </details>
+  </section>
+
+  <section class="guide">
+    <h2>怎么用</h2>
+    <ol>
+      <li>点「复制」，打开小豆 App，用豆包账号登录，在等候名单页点「我有邀请码」填写 6 位码；或直接点「去兑换」。</li>
+      <li>填进去发现不能用，回来点一下「已被用」，帮后面的人少试一次；能用就点「能用」。</li>
+      <li>拿到资格后，把自己的码传下去。</li>
+    </ol>
+    <h2>用之前先看</h2>
+    <ul>
+      <li><b>一码一次。</b>别人先用掉了，你再填就会失败。</li>
+      <li><b>时间怎么算：</b>「X 分钟前发出」按原帖时间；标「约」的是根据网页上写的“几分钟前”推算的；「查到于」是本站第一次查到这个码的时间。</li>
+      <li><b>状态：</b>「待验证」表示还没人反馈；「N 人说已被用」来自访客标记，所有人都能看到。</li>
+      <li><b>别花钱买码，</b>也不要交押金。本站不收费、不代售、不代激活，与字节跳动、豆包、小豆官方无关。</li>
+    </ul>
+  </section>
+
+  <footer>数据来自互联网上的公开内容，每几分钟自动查询一次。</footer>
+</div>
 <div class="toast" id="toast"></div>
-
-<template id="card">
-  <article class="card">
-    <div class="row1">
-      <span class="code"></span>
-      <span class="chance"></span>
-    </div>
-    <div class="chips"></div>
-    <dl class="times"></dl>
-    <div class="actions">
-      <button class="btn primary copy">复制</button>
-      <a class="btn tint go" target="_blank" rel="noopener noreferrer">去兑换</a>
-      <span class="spacer"></span>
-      <button class="btn ghost ok">能用 <b>0</b></button>
-      <button class="btn ghost bad">失效了 <b>0</b></button>
-    </div>
-  </article>
-</template>
 <script src="app.js"></script>
 </body>
 </html>
