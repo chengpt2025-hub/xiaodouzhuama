@@ -4,7 +4,7 @@ const VOTE_API = "https://abacus.jasoncameron.dev";
 const VOTE_NS = "xiaodou-radar-v1";
 const NEW_MIN = 30, FRESH_MIN = 10;
 const $ = (s) => document.querySelector(s);
-let data = null, plat = "";
+let data = null, plat = "", rangeMin = 0;
 const votes = {};
 const mine = JSON.parse(localStorage.getItem("xd_votes") || "{}");
 
@@ -108,7 +108,14 @@ function render() {
     Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([p, n]) => `<button data-p="${p}" class="${plat === p ? "on" : ""}">${platName(p)} ${n}</button>`).join("");
   pl.querySelectorAll("button").forEach((b) => (b.onclick = () => { plat = b.dataset.p; render(); }));
 
-  const list = all.filter((c) => !plat || c.platform === plat).sort((a, b) => timeOf(b) - timeOf(a));
+  const showDead = $("#showDead").checked;
+  const list = all.filter((c) => (!plat || c.platform === plat)
+      && (!rangeMin || minsAgo(c.posted_at || c.first_seen) <= rangeMin)
+      && (showDead || !status(c).dead))
+    .sort((a, b) => timeOf(b) - timeOf(a));
+  const hiddenN = all.length - list.length;
+  $("#summary").textContent = `共查到 ${all.length} 个码，当前显示 ${list.length} 个` +
+    (hiddenN ? `（${hiddenN} 个被上面的时间范围 / 平台 / 状态条件隐藏，点「全部」并勾选“显示已被用”可看到全部）` : "");
   const isNew = (c) => c.posted_at && minsAgo(c.posted_at) <= NEW_MIN && !status(c).dead;
   const fresh = list.filter(isNew), old = list.filter((c) => !isNew(c));
 
@@ -137,6 +144,12 @@ function render() {
   $("#oldCount").textContent = `· ${old.length} 条`;
 }
 
+$("#range").onclick = (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  document.querySelectorAll("#range button").forEach((x) => x.classList.toggle("on", x === b));
+  rangeMin = Number(b.dataset.v); render();
+};
+$("#showDead").onchange = render;
 $("#refresh").onclick = () => { load(); toast("已刷新"); };
 load();
 setInterval(load, 30000);

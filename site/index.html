@@ -22,7 +22,14 @@
 
   <section id="hero" class="hero" hidden></section>
 
+  <div class="bar">
+    <div class="seg" id="range">
+      <button data-v="10">10 分钟</button><button data-v="30">30 分钟</button><button data-v="60">1 小时</button><button data-v="1440">24 小时</button><button data-v="0" class="on">全部</button>
+    </div>
+    <label class="chk"><input type="checkbox" id="showDead" checked> 显示已被用 / 过期的码</label>
+  </div>
   <nav class="plats" id="plats"></nav>
+  <p class="summary" id="summary"></p>
 
   <section>
     <h2>最新的码 <span class="count" id="newCount"></span><small>30 分钟内发出</small></h2>
@@ -31,7 +38,7 @@
   </section>
 
   <section>
-    <details id="oldBox">
+    <details id="oldBox" open>
       <summary><h2>较旧的码（大概率已被用完）<span class="count" id="oldCount"></span></h2></summary>
       <ul class="rows old" id="oldList"></ul>
     </details>

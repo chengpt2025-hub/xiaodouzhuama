@@ -60,7 +60,9 @@ def load(path):
 def run(out_path, prev_path, state_path):
     now = datetime.now(timezone.utc)
     since = now - timedelta(hours=LOOKBACK_HOURS)
-    prev = {c["code"]: c for c in load(prev_path).get("codes", [])}  # prev_path 是内部状态文件
+    STATE_VERSION = 2  # 识别规则改动后升级版本号，旧的追踪状态作废，避免旧的误判一直留着
+    _st = load(prev_path)
+    prev = {c["code"]: c for c in _st.get("codes", [])} if _st.get("version") == STATE_VERSION else {}
     status = {}
     posts = []
     enabled = [s for s in os.getenv("RADAR_SOURCES", ",".join(SOURCES)).split(",") if s in SOURCES]
@@ -137,7 +139,7 @@ def run(out_path, prev_path, state_path):
                     item["expires_at"] = iso(exp)
                 if conf == "high":
                     item["confidence"] = "high"
-                item["suspect_used"] = item.get("suspect_used") or used
+                item["suspect_used"] = used if p.url == item.get("url") else (item.get("suspect_used") or used)
             item.pop("time_estimated", None)
 
     keep_after = now - timedelta(hours=KEEP_HOURS)
@@ -153,7 +155,7 @@ def run(out_path, prev_path, state_path):
     result.sort(key=lambda c: c.get("posted_at") or c["first_seen"], reverse=True)
 
     # 内部状态（含出处，用于下一轮合并）与公开数据（不含出处）分开保存
-    state = {"updated_at": iso(now), "codes": result, "scans": (load(prev_path).get("scans") or [])[-95:]}
+    state = {"version": STATE_VERSION, "updated_at": iso(now), "codes": result, "scans": (load(prev_path).get("scans") or [])[-95:]}
     new_codes = [c for c in result if c["code"] not in prev]
     state["scans"].append({"at": iso(now), "new": len(new_codes), "total": len(result),
                            "sources": {k: (v.get("posts", 0) if v.get("ok") else -1) for k, v in status.items()}})
