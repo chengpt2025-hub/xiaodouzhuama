@@ -1,0 +1,92 @@
+name: 小豆邀请码雷达
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # GitHub 最短 5 分钟一次，高峰期可能会有延迟
+  workflow_dispatch:         # 支持在 Actions 页面手动点 "Run workflow"
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: radar
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 安装依赖和无头浏览器（抖音 / 小红书游客抓取用）
+        run: |
+          pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: 取回上一轮的追踪状态（存在 Actions 缓存里，不公开）
+        uses: actions/cache/restore@v4
+        with:
+          path: state
+          key: radar-state-${{ github.run_id }}
+          restore-keys: radar-state-
+
+      - name: 启动 SearXNG（开源元搜索，聚合 Google / Bing / 百度 / 搜狗微信 / 360 等）
+        run: |
+          docker run -d --name searxng -p 8888:8080 \
+            -v "$PWD/deploy/searxng:/etc/searxng" searxng/searxng:latest
+          for i in $(seq 1 30); do
+            curl -sf "http://127.0.0.1:8888/search?q=test&format=json" >/dev/null && echo "SearXNG 就绪" && break
+            sleep 2
+          done
+
+      - name: 扫描各平台
+        env:
+          SEARXNG_URL: http://127.0.0.1:8888
+          GITHUB_TOKEN: ${{ github.token }}
+          WEIBO_COOKIE: ${{ secrets.WEIBO_COOKIE }}
+          RADAR_LOOPS: ${{ vars.RADAR_LOOPS || '2' }}
+          RADAR_KEYWORDS: ${{ vars.RADAR_KEYWORDS || '小豆邀请码,小豆 邀请码,小豆邀请' }}
+        run: python radar/main.py --out site/data/codes.json --state state/state.json
+
+      - name: 保存追踪状态
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: state
+          key: radar-state-${{ github.run_id }}
+
+      - name: 保存公开数据到 data 分支（只保留最新一份，不刷提交历史）
+        run: |
+          tmp=$(mktemp -d)
+          cp site/data/codes.json "$tmp/"
+          cd "$tmp"
+          git init -q -b data
+          git config user.name "radar-bot"
+          git config user.email "radar-bot@users.noreply.github.com"
+          git add codes.json
+          git commit -qm "data: $(date -u +%FT%TZ)"
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" data
+
+      - uses: actions/configure-pages@v5
+        continue-on-error: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
