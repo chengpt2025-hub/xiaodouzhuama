@@ -227,14 +227,28 @@ def fetch_weibo(keywords, since):
     return out
 
 
-def fetch_douyin(keywords, since):
-    from browser import fetch_douyin as f
-    return f(keywords, since, Post)
+def _signed_then_browser(name):
+    """先用签名法（不开浏览器），失败或没数据再用无头浏览器兜底。"""
+    def run(keywords, since):
+        import signed
+        try:
+            got = getattr(signed, name)(keywords, since, Post)
+            if got:
+                return got
+            print(f"  [{name}] 签名法本轮没有新内容")
+        except Exception as e:  # noqa: BLE001
+            print(f"  [{name}] 签名法失败: {e}")
+            if os.getenv("RADAR_BROWSER_FALLBACK", "1") != "1":
+                raise
+        if os.getenv("RADAR_BROWSER_FALLBACK", "1") == "1":
+            import browser
+            return getattr(browser, name)(keywords, since, Post)
+        return []
+    return run
 
 
-def fetch_xiaohongshu(keywords, since):
-    from browser import fetch_xiaohongshu as f
-    return f(keywords, since, Post)
+fetch_douyin = _signed_then_browser("fetch_douyin")
+fetch_xiaohongshu = _signed_then_browser("fetch_xiaohongshu")
 
 
 def fetch_web(keywords, since):
@@ -245,8 +259,8 @@ def fetch_web(keywords, since):
 SOURCES = {
     "bilibili": fetch_bilibili,        # 游客指纹 + WBI 签名
     "tieba": fetch_tieba,              # 贴吧客户端签名
-    "douyin": fetch_douyin,            # 无头浏览器游客模式（页面自己算 a_bogus 签名）
-    "xiaohongshu": fetch_xiaohongshu,  # 无头浏览器游客模式（页面自己算 X-s 签名）
+    "douyin": fetch_douyin,            # a_bogus 签名游客接口，浏览器兜底
+    "xiaohongshu": fetch_xiaohongshu,  # xhshow 签名游客接口，浏览器兜底
     "web": fetch_web,                  # 全网：元搜索 + 网页阅读 + Telegram + GitHub
     "weibo": fetch_weibo,              # 可选，需要 WEIBO_COOKIE
 }

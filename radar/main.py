@@ -161,6 +161,8 @@ def run(out_path, prev_path, state_path):
                       "found_24h": sum(1 for c in result if c["first_seen"] >= iso(since24)),
                       "scans": state["scans"][-48:]}}
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
+    with open(os.path.join(os.path.dirname(out_path) or ".", "diag.json"), "w", encoding="utf-8") as f:
+        json.dump({"at": iso(now), "sources": status}, f, ensure_ascii=False, indent=1)
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
     print(f"共 {len(result)} 个码，已写入 {out_path}")
