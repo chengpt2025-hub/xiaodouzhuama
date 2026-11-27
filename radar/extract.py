@@ -31,7 +31,7 @@ BLACKLIST = {
 CONTEXT_WORDS = ("小豆", "小荳", "豆包", "doubao", "邀请码", "邀請碼")
 
 
-_UNIT = re.compile(r"^(?:\d+(?:[KMGT]B|PX|MS|HZ|FPS|MAH|MM|CM|KG|GHZ|MHZ|K|W|V)|(?:SAVE|OFF|VIP|GIFT|CODE|PLUS|PRO|MAX|FREE|SHA|MD|RK|ETF)\d+|\d+(?:ETF|OFF))$")
+_UNIT = re.compile(r"^(?:\d+(?:[KMGT]B|PX|MS|HZ|FPS|MAH|MM|CM|KG|GHZ|MHZ|K|W|V|MIN|SEC|HRS|DAY|DAYS|GBPS|MBPS)|(?:SAVE|OFF|VIP|GIFT|CODE|PLUS|PRO|MAX|FREE|SHA|MD|RK|ETF)\d+|\d+(?:ETF|OFF))$")
 
 
 _YEARISH = re.compile(r"^[A-Z]{2}(19|20)\d\d$")  # BF2026、CT2020 这类“字母+年份”的活动码
