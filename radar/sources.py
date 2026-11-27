@@ -256,6 +256,11 @@ def fetch_web(keywords, since):
     return f(keywords, since, Post)
 
 
+def fetch_stealth(keywords, since):
+    from stealth import fetch_stealth as f
+    return f(keywords, since, Post)
+
+
 def fetch_portals(keywords, since):
     from portals import fetch_portals as f
     return f(keywords, since, Post)
@@ -268,5 +273,6 @@ SOURCES = {
     "douyin": fetch_douyin,            # a_bogus 签名游客接口，浏览器兜底
     "xiaohongshu": fetch_xiaohongshu,  # xhshow 签名游客接口，浏览器兜底
     "web": fetch_web,                  # 全网：元搜索 + 网页阅读 + Telegram + GitHub
+    "scrapling": fetch_stealth,        # Scrapling 隐身浏览器，过 Cloudflare / 反爬拦截
     "weibo": fetch_weibo,              # 可选，需要 WEIBO_COOKIE
 }
