@@ -100,7 +100,8 @@ def fetch_douyin(keywords, since, Post):
     dy = Douyin()
     urls = discover([f"抖音 {k}" for k in keywords] + [f"site:douyin.com {keywords[0]}"],
                     ("douyin.com", "iesdouyin.com"))
-    ids = list(dict.fromkeys(i for i in (dy.resolve(u) for u in urls) if i))
+    from shared import DISCOVERED
+    ids = list(dict.fromkeys(list(DISCOVERED["douyin"]) + [i for i in (dy.resolve(u) for u in urls) if i]))
     ids += [i for i in os.getenv("RADAR_DOUYIN_IDS", "").split(",") if i.strip()]
     if not ids:
         raise RuntimeError("全网检索暂未发现相关抖音作品（抖音搜索对游客关闭，需靠全网检索发现作品）")
@@ -161,6 +162,8 @@ def fetch_xiaohongshu(keywords, since, Post):
     x = Xhs()
     urls = discover([f"小红书 {k}" for k in keywords] + [f"site:xiaohongshu.com {keywords[0]}"],
                     ("xiaohongshu.com", "xhslink.com"))
+    from shared import DISCOVERED
+    urls = list(dict.fromkeys(["https://www." + u if not u.startswith("http") else u for u in DISCOVERED["xiaohongshu"]] + urls))
     out = []
     for u in urls[: int(os.getenv("RADAR_XHS_NOTES", "15"))]:
         if "xhslink.com" in u:

@@ -22,14 +22,22 @@ SALE_WORDS = ("出售", "元一个", "元/个", "块一个", "收费", "付费",
 BLACKLIST = {
     "DOUBAO", "XIAODO", "GEMINI", "OPENAI", "GITHUB", "IPHONE", "WECHAT", "BILIBI", "ANDROI",
     "INVITE", "SHARE0", "CHATGP", "GOOGLE", "TIKTOK", "DOUYIN", "WEIBO0", "QQ1234", "123456",
+    "WINDOW", "NEWWEB", "MOBILE", "BUTTON", "SEARCH", "NOTICE", "CHROME", "SAFARI", "SELECT", "SUBMIT",
+    "ACCESS", "SERVER", "CLIENT", "DOMAIN", "CANCEL", "CREATE", "DELETE", "FOOTER", "HEADER", "IMAGES",
+    "VIDEOS", "PUBLIC", "REPORT", "SOURCE", "STATUS", "TOKENS", "BROWSE", "ONLINE", "OFFLINE", "COOKIE",
     "000000", "111111", "666666", "888888", "AAAAAA", "HTTPS0", "UPDATE", "SYSTEM", "ONLINE",
 }
 
 CONTEXT_WORDS = ("小豆", "小荳", "豆包", "doubao", "邀请码", "邀請碼")
 
 
+_UNIT = re.compile(r"^\d+(?:[KMGT]B|PX|MS|HZ|FPS|MAH|MM|CM|KG|GHZ|MHZ|K|W|V)$")
+
+
 def _valid(code: str) -> bool:
     c = code.upper()
+    if _UNIT.match(c):
+        return False
     if c in BLACKLIST:
         return False
     if c.isdigit():  # 纯数字多半是时间/金额/QQ号，官方码目前都带字母
@@ -132,3 +140,27 @@ def parse_post_time(text: str, now: datetime):
     if not best:
         return None, None
     return best[1].astimezone(timezone.utc), best[2]
+
+
+_HEXISH = re.compile(r"^[A-F0-9]{6}$")
+_CTX_NEAR = re.compile(r"小豆|小荳|邀请码|邀請碼|invite|豆包")
+
+
+def extract_codes_strict(text: str):
+    """用于搜索结果页 / 门户页：页面上杂讯多，只认“邀请码/小豆”附近 60 字以内的码，
+    裸码还要求至少 2 个字母、且不能像十六进制数字（避免把 FIBA1993、颜色值等误认成码）。"""
+    out = {}
+    for code, conf in extract_codes(text, True):
+        for m in re.finditer(code, text, re.I):
+            win = text[max(0, m.start() - 60): m.end() + 60]
+            if not _CTX_NEAR.search(win):
+                continue
+            letters = sum(ch.isalpha() for ch in code)
+            if conf != "high" and (letters < 2 or _HEXISH.match(code)):
+                continue
+            # 纯字母的裸码（像 WINDOW、NEWWEB 这种英文单词）必须紧挨着“邀请码”才算
+            if conf != "high" and code.isalpha() and not re.search(r"(邀请码|邀請碼|码|碼).{0,12}$", text[max(0, m.start() - 20): m.start()]):
+                continue
+            out[code] = conf
+            break
+    return list(out.items())

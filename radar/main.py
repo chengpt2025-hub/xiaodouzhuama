@@ -7,7 +7,7 @@ import time
 from datetime import datetime, timedelta, timezone
 
 sys.path.insert(0, os.path.dirname(__file__))
-from extract import extract_codes, has_context, looks_for_sale, looks_used, parse_expire, parse_post_time  # noqa: E402
+from extract import extract_codes, extract_codes_strict, has_context, looks_for_sale, looks_used, parse_expire, parse_post_time  # noqa: E402
 from sources import SOURCES  # noqa: E402
 
 KEYWORDS = [k.strip() for k in os.getenv("RADAR_KEYWORDS", "小豆邀请码,小豆 邀请码,小豆邀请").split(",") if k.strip()]
@@ -30,9 +30,15 @@ def platform_of(source, url, aggregator):
     """只保留平台名，不保留具体出处。"""
     if aggregator:
         return "抓码聚合站"
-    u = (url or "").lower()
+    if source.startswith("门户·"):
+        return source.split("·", 1)[1]
+    import urllib.parse as _up
+    try:
+        host = _up.urlparse(url or "").netloc.lower().split(":")[0]
+    except Exception:  # noqa: BLE001
+        host = ""
     for h, name in PLATFORM_HOSTS:
-        if h in u:
+        if host == h or host.endswith("." + h) or ("." not in h and h in host):
             return name
     base = source.split("·")[0].replace("评论", "").replace("楼层", "")
     return {"全网": "其他网页", "贴吧": "百度贴吧"}.get(base, base)
@@ -72,9 +78,9 @@ def run(out_path, prev_path, state_path):
     RANK = {"原帖时间": 3, "页面标注": 2, "首次发现": 1}
     for p in posts:
         ctx = p.is_topic or has_context(p.title) or has_context(p.text)
-        found = extract_codes(p.text, ctx)
+        found = extract_codes_strict(p.text) if getattr(p, "serp", False) else extract_codes(p.text, ctx)
         is_page = getattr(p, "page_text", False) or getattr(p, "time_estimated", False)
-        aggregator = getattr(p, "page_text", False) and len(found) >= 5  # 一页里一堆码 = 抓码 / 聚合站
+        aggregator = getattr(p, "page_text", False) and not getattr(p, "serp", False) and len(found) >= 5  # 一页里一堆码 = 抓码 / 聚合站
         up = p.text.upper()
         pos = sorted((up.find(c), c) for c, _ in found if up.find(c) >= 0)
         for code, conf in found:

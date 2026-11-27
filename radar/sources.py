@@ -256,7 +256,13 @@ def fetch_web(keywords, since):
     return f(keywords, since, Post)
 
 
+def fetch_portals(keywords, since):
+    from portals import fetch_portals as f
+    return f(keywords, since, Post)
+
+
 SOURCES = {
+    "portals": fetch_portals,          # 头条 / 夸克 / 360 / 搜狗知乎 / 豆瓣 / 虎扑 / SOV2EX（先跑，给抖音小红书提供作品）
     "bilibili": fetch_bilibili,        # 游客指纹 + WBI 签名
     "tieba": fetch_tieba,              # 贴吧客户端签名
     "douyin": fetch_douyin,            # a_bogus 签名游客接口，浏览器兜底
