@@ -37,12 +37,38 @@ def _ensure():
         subprocess.run([sys.executable, "-m", "pip", "install", "-q", "scrapling[fetchers]"], timeout=300, check=False)
     try:
         subprocess.run(["scrapling", "install"], timeout=420, check=False)
+        # 兜底：scrapling 底层用 patchright，单独把它的 chromium 也装上
+        subprocess.run([sys.executable, "-m", "patchright", "install", "chromium"], timeout=300, check=False)
         from scrapling.fetchers import StealthyFetcher  # noqa: F401,F811
         _READY = True
     except Exception as e:  # noqa: BLE001
         print("  [scrapling] 安装失败:", e)
         _READY = False
     return _READY
+
+
+def _chrome_path():
+    """工作流里已经装好的 Playwright Chromium，作为 Scrapling 浏览器启动失败时的备用可执行文件。"""
+    import glob
+    import os
+    for pat in ("~/.cache/ms-playwright/chromium-*/chrome-linux*/chrome",
+                "~/.cache/ms-playwright/chromium_headless_shell-*/chrome-*/headless_shell"):
+        hits = sorted(glob.glob(os.path.expanduser(pat)))
+        if hits:
+            return hits[-1]
+    return None
+
+
+def _fetch(url):
+    from scrapling.fetchers import StealthyFetcher
+    kw = dict(headless=True, solve_cloudflare=True, network_idle=True, timeout=45000)
+    try:
+        return StealthyFetcher.fetch(url, **kw)
+    except Exception as e:  # noqa: BLE001
+        exe = _chrome_path()
+        if exe and "launch" in str(e):
+            return StealthyFetcher.fetch(url, executable_path=exe, **kw)
+        raise
 
 
 def _text(page):
@@ -56,14 +82,13 @@ def _text(page):
 def fetch_stealth(keywords, since, Post):
     if not _ensure():
         raise RuntimeError("Scrapling 没装上，本轮跳过")
-    from scrapling.fetchers import StealthyFetcher
     out, ok, errs = [], [], []
     now = datetime.now(timezone.utc)
     q = up.quote(keywords[0])
     for name, tpl in TARGETS:
         url = tpl.format(q=q)
         try:
-            page = StealthyFetcher.fetch(url, headless=True, solve_cloudflare=True, network_idle=True, timeout=45000)
+            page = _fetch(url)
             status = getattr(page, "status", 0)
             text = _text(page)
             if status >= 400 or len(text) < 200 or re.search(r"安全验证|验证码|captcha|Just a moment|请先登录", text[:3000], re.I):
@@ -79,7 +104,7 @@ def fetch_stealth(keywords, since, Post):
                 p.serp = True
                 out.append(p)
         except Exception as e:  # noqa: BLE001
-            errs.append(f"{name}:{str(e)[:40]}")
+            errs.append(f"{name}:{str(e).splitlines()[0][:40]} {str(e)[-80:]}")
         time.sleep(0.5)
     print(f"  [scrapling] 通了 {ok}；没通 {errs}")
     if not ok:
