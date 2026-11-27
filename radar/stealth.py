@@ -107,6 +107,8 @@ def fetch_stealth(keywords, since, Post):
             errs.append(f"{name}:{str(e).splitlines()[0][:40]} {str(e)[-80:]}")
         time.sleep(0.5)
     print(f"  [scrapling] 通了 {ok}；没通 {errs}")
+    from shared import NOTES
+    NOTES["scrapling"] = {"opened": ok, "failed": [e[:120] for e in errs]}
     if not ok:
         raise RuntimeError("Scrapling 入口全部失败：" + "; ".join(errs[:6]))
     return out

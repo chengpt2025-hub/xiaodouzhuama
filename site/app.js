@@ -20,7 +20,7 @@ const hm = (iso) => new Date(iso).toLocaleTimeString("zh-CN", { hour12: false, h
 const md = (iso) => new Date(iso).toLocaleString("zh-CN", { hour12: false, month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Shanghai" });
 const full = (iso) => new Date(iso).toLocaleString("zh-CN", { hour12: false, year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Shanghai" });
 const toast = (t) => { const e = $("#toast"); e.textContent = t; e.classList.add("show"); clearTimeout(e._t); e._t = setTimeout(() => e.classList.remove("show"), 1600); };
-const timeOf = (c) => new Date(c.posted_at || c.first_seen);
+const timeOf = (c) => (c.posted_at ? new Date(c.posted_at) : new Date(0));
 const platName = (p) => ({ X: "X 帖", "微博": "微博", "抖音": "抖音评论", "B站": "B站", "百度贴吧": "贴吧" }[p] || p || "网页");
 
 function status(c) {
@@ -110,14 +110,15 @@ function render() {
 
   const showDead = $("#showDead").checked;
   const list = all.filter((c) => (!plat || c.platform === plat)
-      && (!rangeMin || minsAgo(c.posted_at || c.first_seen) <= rangeMin)
+      && (!rangeMin || (c.posted_at && minsAgo(c.posted_at) <= rangeMin))
       && (showDead || !status(c).dead))
     .sort((a, b) => timeOf(b) - timeOf(a));
   const hiddenN = all.length - list.length;
   $("#summary").textContent = `共查到 ${all.length} 个码，当前显示 ${list.length} 个` +
     (hiddenN ? `（${hiddenN} 个被上面的时间范围 / 平台 / 状态条件隐藏，点「全部」并勾选“显示已被用”可看到全部）` : "");
   const isNew = (c) => c.posted_at && minsAgo(c.posted_at) <= NEW_MIN && !status(c).dead;
-  const fresh = list.filter(isNew), old = list.filter((c) => !isNew(c));
+  const fresh = list.filter(isNew), old = list.filter((c) => !isNew(c) && c.posted_at),
+    unknown = list.filter((c) => !c.posted_at);
 
   const best = [...fresh].sort((a, b) => score(b) - score(a))[0];
   const hero = $("#hero");
@@ -142,6 +143,9 @@ function render() {
   $("#newList").hidden = freshRest.length === 0;
   fill($("#oldList"), old);
   $("#oldCount").textContent = `· ${old.length} 条`;
+  fill($("#unkList"), unknown);
+  $("#unkCount").textContent = `· ${unknown.length} 条`;
+  $("#unkBox").hidden = unknown.length === 0;
 }
 
 $("#range").onclick = (e) => {

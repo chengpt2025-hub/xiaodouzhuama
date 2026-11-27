@@ -75,6 +75,9 @@ def run(out_path, prev_path, state_path):
             got = SOURCES[name](KEYWORDS, since)
             posts.extend(got)
             status[name] = {"ok": True, "posts": len(got), "seconds": round(time.time() - t0, 1)}
+            from shared import NOTES
+            if name in NOTES:
+                status[name]["note"] = NOTES[name]
             print(f"[{name}] OK，{len(got)} 条")
         except Exception as e:  # noqa: BLE001
             status[name] = {"ok": False, "error": str(e)[:200]}
@@ -89,6 +92,10 @@ def run(out_path, prev_path, state_path):
         aggregator = getattr(p, "page_text", False) and not getattr(p, "serp", False) and len(found) >= 5  # 一页里一堆码 = 抓码 / 聚合站
         up = p.text.upper()
         pos = sorted((up.find(c), c) for c, _ in found if up.find(c) >= 0)
+        # 整页一大串码却没有任何一个标了时间 = 码库 / 存档页，没法判断新旧，整页不收
+        if aggregator and len(found) >= 15 and not any(
+                parse_post_time(p.text[j: j + 200], now)[0] for j, _ in pos[:40]):
+            continue
         for code, conf in found:
             i = up.find(code)
             # 这个码自己的那一段：从码开始，到下一个码之前（聚合站列表里每个码一段）
