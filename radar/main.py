@@ -173,7 +173,9 @@ def run(out_path, prev_path, state_path):
         json.dump(state, f, ensure_ascii=False)
     KEEP = ("code", "platform", "seen_on", "seen_count", "first_seen", "last_seen", "posted_at", "time_source",
             "time_text", "expires_at", "confidence", "suspect_used", "suspect_sale", "aggregator", "via", "invite_link")
-    public = [{k: c.get(k) for k in KEEP} for c in result]
+    # 聚合站上没标时间的码不公开：没法判断新旧，按要求“聚合站的码必须标清时间”
+    public = [{k: c.get(k) for k in KEEP} for c in result
+              if not (c.get("aggregator") and not c.get("posted_at") and not c.get("expires_at"))]
     for c in public:
         c.setdefault("platform", None)
         if not c["platform"]:
