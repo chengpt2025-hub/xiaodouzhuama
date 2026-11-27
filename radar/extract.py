@@ -35,7 +35,7 @@ _UNIT = re.compile(r"^(?:\d+(?:[KMGT]B|PX|MS|HZ|FPS|MAH|MM|CM|KG|GHZ|MHZ|K|W|V)|
 
 
 _YEARISH = re.compile(r"^[A-Z]{2}(19|20)\d\d$")  # BF2026、CT2020 这类“字母+年份”的活动码
-_EXTRA_BLACK = {"WT588F", "ICLOUD", "HOTELS", "AIRBNB", "AMAZON", "TAOBAO", "LENOVO", "ALIPAY", "TMALL0"}
+_EXTRA_BLACK = {"LPDDR5", "LPDDR4", "GDDR6X", "PAN666", "WT588F", "ICLOUD", "HOTELS", "AIRBNB", "AMAZON", "TAOBAO", "LENOVO", "ALIPAY", "TMALL0"}
 
 
 def _wordlike(c: str) -> bool:
@@ -45,7 +45,7 @@ def _wordlike(c: str) -> bool:
 
 def _valid(code: str, from_link: bool = False) -> bool:
     c = code.upper()
-    if c in _EXTRA_BLACK:
+    if c in _EXTRA_BLACK or re.match(r"^(LP)?G?DDR\d", c):  # 内存规格之类
         return False
     if not from_link and (_YEARISH.match(c) or _wordlike(c)):
         return False
